@@ -12,13 +12,13 @@ import Header from "../../examples/Header.vue";
 // import PresentationCounter from "./Sections/PresentationCounter.vue";
 // import PresentationPages from "./Sections/PresentationPages.vue";
 import PresentationExample from "./Sections/PresentationExample.vue";
-import data from "./Sections/Data/designBlocksData";
+// import data from "./Sections/Data/designBlocksData";
 // import BuiltByDevelopers from "./Components/BuiltByDevelopers.vue";
 // import PresentationTestimonials from "./Sections/PresentationTestimonials.vue";
 // import PresentationInformation from "./Sections/PresentationInformation.vue";
 
 //images
-import vueMkHeader from "@/assets/img/vue-mk-header.jpg";
+import vueMkHeader from "@/assets/img/bmw-banner-xseries-1.jpg";
 // import wavesWhite from "@/assets/img/waves-white.svg";
 // import logoBootstrap from "@/assets/img/logos/bootstrap5.jpg";
 // import logoTailwind from "@/assets/img/logos/icon-tailwind.jpg";
@@ -53,7 +53,7 @@ onUnmounted(() => {
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
-      <div class="container">
+      <!-- <div class="container">
         <div class="row">
           <div class="col-lg-7 text-center mx-auto position-relative">
             <h1
@@ -68,14 +68,14 @@ onUnmounted(() => {
             </p>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </Header>
 
   <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
     <!-- <PresentationCounter /> -->
     <!-- <PresentationInformation /> -->
-    <PresentationExample :data="data" />
+    <PresentationExample />
     <!-- <PresentationPages /> -->
     <!-- <BuiltByDevelopers /> -->
 

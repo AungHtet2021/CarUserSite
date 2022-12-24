@@ -4,9 +4,9 @@ import { ref, watch } from "vue";
 import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 
 // images
-import ArrDark from "@/assets/img/down-arrow-dark.svg";
+// import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
-import DownArrWhite from "@/assets/img/down-arrow-white.svg";
+// import DownArrWhite from "@/assets/img/down-arrow-white.svg";
 
 const props = defineProps({
   action: {
@@ -43,29 +43,29 @@ const props = defineProps({
 });
 
 // set arrow  color
-function getArrowColor() {
-  if (props.transparent && textDark.value) {
-    return ArrDark;
-  } else if (props.transparent) {
-    return DownArrWhite;
-  } else {
-    return ArrDark;
-  }
-}
+// function getArrowColor() {
+//   if (props.transparent && textDark.value) {
+//     return ArrDark;
+//   } else if (props.transparent) {
+//     return DownArrWhite;
+//   } else {
+//     return ArrDark;
+//   }
+// }
 
 // set text color
-const getTextColor = () => {
-  let color;
-  if (props.transparent && textDark.value) {
-    color = "text-dark";
-  } else if (props.transparent) {
-    color = "text-white";
-  } else {
-    color = "text-dark";
-  }
+// const getTextColor = () => {
+//   let color;
+//   if (props.transparent && textDark.value) {
+//     color = "text-dark";
+//   } else if (props.transparent) {
+//     color = "text-white";
+//   } else {
+//     color = "text-dark";
+//   }
 
-  return color;
-};
+//   return color;
+// };
 
 // set nav color on mobile && desktop
 
@@ -162,7 +162,7 @@ watch(
       >
         <ul class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
-            <a
+            <!-- <a
               role="button"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
               :class="getTextColor()"
@@ -186,7 +186,7 @@ watch(
                 alt="down-arrow"
                 class="arrow ms-1 d-lg-none d-block ms-auto"
               />
-            </a>
+            </a> -->
             <div
               class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
               aria-labelledby="dropdownMenuPages"
@@ -272,7 +272,7 @@ watch(
             </div>
           </li>
           <li class="nav-item dropdown dropdown-hover mx-2">
-            <a
+            <!-- <a
               role="button"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
               :class="getTextColor()"
@@ -296,7 +296,7 @@ watch(
                 alt="down-arrow"
                 class="arrow ms-1 d-lg-none d-block ms-auto"
               />
-            </a>
+            </a> -->
             <div
               class="dropdown-menu dropdown-menu-end dropdown-menu-animation dropdown-md dropdown-md-responsive p-3 border-radius-lg mt-0 mt-lg-3"
               aria-labelledby="dropdownMenuBlocks"
