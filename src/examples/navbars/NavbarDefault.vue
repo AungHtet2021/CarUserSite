@@ -4,9 +4,9 @@ import { ref, watch } from "vue";
 import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 
 // images
-// import ArrDark from "@/assets/img/down-arrow-dark.svg";
+import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
-// import DownArrWhite from "@/assets/img/down-arrow-white.svg";
+import DownArrWhite from "@/assets/img/down-arrow-white.svg";
 
 const props = defineProps({
   action: {
@@ -43,29 +43,29 @@ const props = defineProps({
 });
 
 // set arrow  color
-// function getArrowColor() {
-//   if (props.transparent && textDark.value) {
-//     return ArrDark;
-//   } else if (props.transparent) {
-//     return DownArrWhite;
-//   } else {
-//     return ArrDark;
-//   }
-// }
+function getArrowColor() {
+  if (props.transparent && textDark.value) {
+    return ArrDark;
+  } else if (props.transparent) {
+    return DownArrWhite;
+  } else {
+    return ArrDark;
+  }
+}
 
 // set text color
-// const getTextColor = () => {
-//   let color;
-//   if (props.transparent && textDark.value) {
-//     color = "text-dark";
-//   } else if (props.transparent) {
-//     color = "text-white";
-//   } else {
-//     color = "text-dark";
-//   }
+const getTextColor = () => {
+  let color;
+  if (props.transparent && textDark.value) {
+    color = "text-dark";
+  } else if (props.transparent) {
+    color = "text-white";
+  } else {
+    color = "text-dark";
+  }
 
-//   return color;
-// };
+  return color;
+};
 
 // set nav color on mobile && desktop
 
@@ -89,6 +89,7 @@ watch(
   }
 );
 </script>
+
 <template>
   <nav
     class="navbar navbar-expand-lg top-0"
@@ -162,7 +163,7 @@ watch(
       >
         <ul class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
-            <!-- <a
+            <a
               role="button"
               class="nav-link ps-2 d-flex cursor-pointer align-items-center"
               :class="getTextColor()"
@@ -186,7 +187,7 @@ watch(
                 alt="down-arrow"
                 class="arrow ms-1 d-lg-none d-block ms-auto"
               />
-            </a> -->
+            </a>
             <div
               class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
               aria-labelledby="dropdownMenuPages"
@@ -256,17 +257,6 @@ watch(
                   class="dropdown-item border-radius-md"
                 >
                   <span>Author</span>
-                </RouterLink>
-                <div
-                  class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
-                >
-                  Account
-                </div>
-                <RouterLink
-                  :to="{ name: 'signin-basic' }"
-                  class="dropdown-item border-radius-md"
-                >
-                  <span>Sign In</span>
                 </RouterLink>
               </div>
             </div>
@@ -755,11 +745,60 @@ watch(
             </div>
           </li>
         </ul>
-        <ul class="navbar-nav d-lg-block d-none">
-          <li class="nav-item">
-            <a class="btn btn-sm mb-0" :class="action.color">{{
-              action.label
-            }}</a>
+
+        <ul class="navbar-nav navbar-nav-hover ms-auto">
+          <li class="nav-item dropdown dropdown-hover mx-2">
+            <a
+              role="button"
+              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+              :class="getTextColor()"
+              id="dropdownMenuPages"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i
+                class="material-icons opacity-6 me-2 text-md"
+                :class="getTextColor()"
+                >dashboard</i
+              >
+              Account
+              <img
+                :src="getArrowColor()"
+                alt="down-arrow"
+                class="arrow ms-2 d-lg-block d-none"
+              />
+              <img
+                :src="getArrowColor()"
+                alt="down-arrow"
+                class="arrow ms-1 d-lg-none d-block ms-auto"
+              />
+            </a>
+            <div
+              class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
+              aria-labelledby="dropdownMenuPages"
+            >
+              <div class="row d-none d-lg-block">
+                <div class="col-12 px-4 py-2">
+                  <div class="row">
+                    <div class="position-relative">
+                      <RouterLink
+                        :to="{ name: 'signin-basic' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                        <span>Sign In</span>
+                      </RouterLink>
+
+                      <RouterLink
+                        :to="{ name: 'signin-basic' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                        <span>Register</span>
+                      </RouterLink>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
       </div>

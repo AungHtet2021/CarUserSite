@@ -3,7 +3,7 @@
 import HorizontalTeamCard from "@/examples/cards/teamCards/HorizontalTeamCard.vue";
 
 // images
-import emma from "@/assets/img/team-5.jpg";
+import Khant from "@/assets/img/kmt2.jpg";
 import william from "@/assets/img/bruce-mars.jpg";
 import ivana from "@/assets/img/ivana-squares.jpg";
 import marquez from "@/assets/img/ivana-square.jpg";
@@ -27,7 +27,7 @@ import marquez from "@/assets/img/ivana-square.jpg";
         <div class="col-lg-6 col-12">
           <HorizontalTeamCard
             class="mt-4"
-            :image="emma"
+            :image="Khant"
             :profile="{ name: 'Emma Roberts', link: 'javascript:;' }"
             :position="{ label: 'UI Designer', color: 'success' }"
             description="Artist is a term applied to a person who engages in an

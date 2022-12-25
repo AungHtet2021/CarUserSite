@@ -1,17 +1,9 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
-//example components
-import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
-
-//image
-import bg0 from "@/assets/img/bg9.jpg";
-
-//dep
 import Typed from "typed.js";
-
+import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 //sections
-import Information from "./Sections/AboutInformation.vue";
-import AboutTeam from "./Sections/AboutTeam.vue";
+import Information from "./../AboutUs/Sections/AboutInformation.vue";
 
 const body = document.getElementsByTagName("body")[0];
 //hooks
@@ -56,13 +48,9 @@ onUnmounted(() => {
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
             <h1 class="text-white">
-              Work with an amazing <span class="text-white" id="typed"></span>
+             Car details
             </h1>
-            <div id="typed-strings">
-              <h1>team</h1>
-              <h1>design</h1>
-              <h1>tool</h1>
-            </div>
+     
             <p class="lead mb-4 text-white opacity-8">
               We’re constantly trying to express ourselves and actualize our
               dreams.
@@ -74,6 +62,5 @@ onUnmounted(() => {
   </header>
   <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
     <Information />
-    <AboutTeam />
   </div>
 </template>

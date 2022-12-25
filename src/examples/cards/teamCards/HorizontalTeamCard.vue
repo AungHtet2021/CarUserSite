@@ -22,6 +22,14 @@ defineProps({
   },
 });
 </script>
+<style>
+.teamImage {
+  min-width: 146px;
+  max-width: 146px;
+  min-height: 146px;
+  max-height: 146px;
+}
+</style>
 <template>
   <div class="card card-profile">
     <div class="row">
@@ -29,7 +37,7 @@ defineProps({
         <a :href="profile.link">
           <div class="p-3 pe-md-0">
             <img
-              class="w-100 border-radius-md shadow-lg"
+              class="w-100 border-radius-md shadow-lg teamImage"
               :src="image"
               :alt="profile.name"
             />
