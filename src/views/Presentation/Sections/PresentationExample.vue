@@ -1,4 +1,5 @@
 <template>
+
   <h1 class="text-black">OUR BEST AUTO SERVICES FOR YOU</h1>
   <div class="container mt-sm-5 mt-5">
     <div class="row col-md-12">
@@ -11,7 +12,7 @@
           />
           <h4>{{ brand.name }}</h4>
           <h6>{{ brand.price }} $</h6>
-          <span> Learn More </span>
+          <span @click="goToHome()"> Learn More </span>
         </span>
       </template>
     </div>
@@ -29,7 +30,7 @@ export default {
   },
 
   methods: {
-    async getAllBrands() {
+    async getAllCars() {
       const resp = await api.get("car/carList");
       if (resp) {
         const data = await resp.json();
@@ -39,10 +40,14 @@ export default {
         console.log("something wrong");
       }
     },
+
+    goToHome() {
+      this.$router.push({ name: "details", params: { id: 30 } });
+    },
   },
 
   async created() {
-    await this.getAllBrands();
+    await this.getAllCars();
   },
 };
 </script>
