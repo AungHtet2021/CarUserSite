@@ -39,7 +39,7 @@ const router = createRouter({
       component: AboutView,
     },
     {
-      path: "/pages/landing-pages/car-details",
+      path: "/pages/landing-pages/car-details/:id",
       name: "details",
       component: CarDetails,
     },

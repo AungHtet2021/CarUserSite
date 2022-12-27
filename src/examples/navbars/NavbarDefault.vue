@@ -208,13 +208,15 @@ watch(
                         <span>About Us</span>
                       </RouterLink>
                       <RouterLink
-                        :to="{ name: 'contactus' }"
+                        :to="{
+                          name: 'contactus',
+                        }"
                         class="dropdown-item border-radius-md"
                       >
                         <span>Contact Us</span>
                       </RouterLink>
                       <RouterLink
-                        :to="{ name: 'author' }"
+                        :to="{ name: 'details', params: { id: 30 } }"
                         class="dropdown-item border-radius-md"
                       >
                         <span>Author</span>
