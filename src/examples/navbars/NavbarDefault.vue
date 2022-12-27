@@ -789,7 +789,7 @@ watch(
                       </RouterLink>
 
                       <RouterLink
-                        :to="{ name: 'signin-basic' }"
+                        :to="{ name: 'register-basic' }"
                         class="dropdown-item border-radius-md"
                       >
                         <span>Register</span>

@@ -5,6 +5,7 @@ import CarDetails from "../views/LandingPages/components/CarDetails.vue";
 import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
+import RegisterBasicView from "../views/LandingPages/Register/BasicView.vue";
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
 import NavigationNavbars from "../layouts/sections/navigation/navbars/NavbarsView.vue";
@@ -53,9 +54,14 @@ const router = createRouter({
       component: AuthorView,
     },
     {
-      path: "/pages/landing-pages/basic",
+      path: "/pages/landing-pages/signin-basic",
       name: "signin-basic",
       component: SignInBasicView,
+    },
+    {
+      path: "/pages/landing-pages/register-basic",
+      name: "register-basic",
+      component: RegisterBasicView,
     },
     {
       path: "/sections/page-sections/page-headers",
