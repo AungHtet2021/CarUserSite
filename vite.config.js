@@ -12,3 +12,18 @@ export default defineConfig({
     },
   },
 });
+
+// export default defineConfig(({ command }) => {
+//   return {
+//     plugins: [vue()],
+//     resolve: {
+//       alias: [
+//         {
+//           find: "@vue/runtime-core",
+//           replacement: "@vue/runtime-core/dist/runtime-core.esm-bundler.js",
+//           "@": fileURLToPath(new URL("./src", import.meta.url)),
+//         },
+//       ],
+//     },
+//   };
+// });

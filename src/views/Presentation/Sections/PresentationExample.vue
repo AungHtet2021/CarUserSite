@@ -2,8 +2,8 @@
 
   <h1 class="text-black">OUR BEST AUTO SERVICES FOR YOU</h1>
   <div class="container mt-sm-5 mt-5">
-    <div class="row col-md-12">
-      
+    <div class="row col-md-12">       
+  
       <template v-for="(brand, index) in brandList" :key="index">
         <span class="col-md-6 mt-5 imgHolder">
           <img
@@ -52,7 +52,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .img {
   border-radius: 5%;
