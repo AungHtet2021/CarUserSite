@@ -1,5 +1,4 @@
 <template>
-
   <h1 class="text-black">OUR BEST AUTO SERVICES FOR YOU</h1>
   <div class="container mt-sm-5 mt-5">
     <div class="row col-md-12">
@@ -12,7 +11,7 @@
           />
           <h4>{{ brand.name }}</h4>
           <h6>{{ brand.price }} $</h6>
-          <span @click="goToHome()"> Learn More </span>
+          <span @click="goToHome(brand.id)"> Learn More </span>
         </span>
       </template>
     </div>
@@ -26,29 +25,28 @@ export default {
   data() {
     return {
       localDomain: utils.constant.localDomain,
+      brandList : [],
     };
   },
-
+  async created() {
+    await this.getAllCars();
+  },
   methods: {
     async getAllCars() {
       const resp = await api.get("car/carList");
       if (resp) {
-        const data = await resp.json();
-        if (data) this.brandList = data;
-        console.log(data);
+        this.brandList = await resp.json();
+        console.log(this.brandList);
       } else {
         console.log("something wrong");
       }
     },
 
-    goToHome() {
-      this.$router.push({ name: "details", params: { id: 30 } });
+    goToHome(id) {
+      this.$router.push({ name: "details", params: { id: id } });
     },
   },
 
-  async created() {
-    await this.getAllCars();
-  },
 };
 </script>
 

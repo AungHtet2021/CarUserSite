@@ -2,12 +2,13 @@
 import { RouterLink } from "vue-router";
 import { ref, watch } from "vue";
 import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
-
+import car1 from "@/assets/img/Model Y1.jpg";
 // images
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import downArrow from "@/assets/img/down-arrow.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
-
+import MaterialButton from "@/components/MaterialButton.vue";
+import html2pdf from "html2pdf.js";
 const props = defineProps({
   action: {
     type: Object,
@@ -88,6 +89,35 @@ watch(
     }
   }
 );
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      id: this.$route.params.id,
+      carDetails: {},
+      video: "",
+      qty: 0,
+      grandTotal: 0,
+    };
+  },
+
+  async created() {},
+  methods: {
+    calculation(data) {
+      this.grandTotal = this.grandTotal + parseInt(data);
+      return this.grandTotal;
+    },
+
+    order() {
+      html2pdf(document.getElementById("element-to-convert"), {
+        margin: 1,
+        filename: "CustomerOrder.pdf",
+      });
+    },
+  },
+};
 </script>
 
 <template>
@@ -201,37 +231,20 @@ watch(
                       >
                         Landing Pages
                       </div>
+
+                      <RouterLink
+                        :to="{ name: 'brand' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                        <span>Brand New</span>
+                      </RouterLink>
                       <RouterLink
                         :to="{ name: 'about' }"
                         class="dropdown-item border-radius-md"
                       >
                         <span>About Us</span>
                       </RouterLink>
-                      <RouterLink
-                        :to="{
-                          name: 'contactus',
-                        }"
-                        class="dropdown-item border-radius-md"
-                      >
-                        <span>Contact Us</span>
-                      </RouterLink>
-                      <RouterLink
-                        :to="{ name: 'details', params: { id: 30 } }"
-                        class="dropdown-item border-radius-md"
-                      >
-                        <span>Author</span>
-                      </RouterLink>
-                      <div
-                        class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-0 mt-3"
-                      >
-                        Account
-                      </div>
-                      <RouterLink
-                        :to="{ name: 'signin-basic' }"
-                        class="dropdown-item border-radius-md"
-                      >
-                        <span>Sign In</span>
-                      </RouterLink>
+               
                     </div>
                   </div>
                 </div>
@@ -759,6 +772,81 @@ watch(
               aria-expanded="false"
             >
               <i
+                class="material-icons opacity-6 me-2 text-md mt-1"
+                :class="getTextColor()"
+                >shopping_cart</i
+              >
+            </a>
+            <div
+              class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
+              aria-labelledby="dropdownMenuPages"
+            >
+              <div id="element-to-convert" class="row d-none d-lg-block">
+                <div class="col-12 px-4 py-2">
+                  <div class="row">
+                    <div class="position-relative">
+                      <div class="row">
+                        <div class="col-3">
+                          <img class="cartImg" :src="car1" />
+                          <i style="margin-left: 50%;margin-top: 50%;color: red;"
+                class="material-icons opacity-6 me-2 text-md"
+                >delete</i
+              >
+                        </div>
+                        <div v-if="calculation('34999')" class="col-9">
+                          <h6>BMW Rt1000</h6>
+                          <span>Quantity:</span>
+                          <span
+                            style="
+                              font-weight: 500;
+                              margin-left: 10px;
+                              font-size: medium;
+                            "
+                            >2</span
+                          >
+                          <br />
+                          <span>Price:</span>
+                          <span
+                            style="
+                              font-weight: 500;
+                              margin-left: 10px;
+                              font-size: medium;
+                            "
+                            >34999$</span
+                          >
+                        </div>
+                      </div>
+                   
+                      <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                      <div class="text-center">
+                        <h6>Total</h6>
+                        <h5>
+                          {{ grandTotal }} $
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <MaterialButton
+                @click="order()"
+                variant="gradient"
+                style="background-color: #e6e600; width: 200px"
+                class="mt-3 mb-0"
+                >Order</MaterialButton
+              >
+            </div>
+          </li>
+          <li class="nav-item dropdown dropdown-hover mx-2">
+            <a
+              role="button"
+              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+              :class="getTextColor()"
+              id="dropdownMenuPages"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i
                 class="material-icons opacity-6 me-2 text-md"
                 :class="getTextColor()"
                 >dashboard</i
@@ -808,3 +896,10 @@ watch(
   </nav>
   <!-- End Navbar -->
 </template>
+<style>
+.cartImg {
+  width: 45px;
+  height: 37px;
+  border-radius: 7%;
+}
+</style>
