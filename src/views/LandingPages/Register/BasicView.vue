@@ -30,7 +30,7 @@ export default{
       password:"",
       phone:"",
       imagePath:"",
-      
+      errorAlert:false,
       categoryForm:false,
       imageName: "",
       imageUrl: "",
@@ -101,7 +101,8 @@ export default{
             console.log(resp)
             this.$router.push({ path: "/" });
           }else{
-            console.log("error")
+            // this.errorAlert=true;
+            alert('Already exist gmail')
           }
         }
     }
@@ -135,6 +136,9 @@ export default{
       </div>
     </div>
   </Header>
+  <!-- <v-alert class="mt-3" v-show="errorAlert" dense type="error">
+          Register Failed!
+        </v-alert> -->
 </template>
 
 <style>
@@ -185,10 +189,10 @@ export default{
 
 button{
     text-decoration: none;
-    background:#5ae4ca;
+    background: #f25417 !important;
     font-weight: bold;
     border:1px solid #eee;
-    border-radius: 28px;
+    border-radius: 28px !important;
     padding:10px 20px;
 }
 

@@ -17,19 +17,27 @@ onMounted(() => {
 });
 </script>
 <script>
+import utils from "../../../utils/utils";
 export default{
   data(){
     return{
-      email:""
+      gmail:"",
+      password:"",
     }
   },
   methods:{
-    signIn(){
-      alert("singin")
+    async login(){
+      const resp = await utils.http.post("/user/login", {
+            gmail: this.gmail,
+            password: this.password,
+          });
+          if(resp.status==200){
+            this.$router.push({ path: "/" });
+          }else{
+            alert('Invalid Gmail & Password')
+          }
     },
-    signUp(){
-      alert("loading")
-    }
+
   }
 }
 </script>
@@ -50,10 +58,10 @@ export default{
         <div class="welcome container">
                     <form @submit.prevent="signUp">
                     <!-- <input type="text" placeholder="displayname" v-model="displayName"> -->
-                    <input type="email" placeholder="email" v-model="email">
+                    <input type="email" placeholder="email" v-model="gmail">
                     <input type="password" placeholder="password" v-model="password">
                     <div v-if="error" class="error">{{ error }}</div>
-                    <button>SignUp</button>
+                    <button @click="login">Login</button>
                   </form>
                   </div>
       </div>
@@ -162,10 +170,10 @@ export default{
 
 button{
     text-decoration: none;
-    background:#5ae4ca;
+    background: #f25417 !important;
     font-weight: bold;
     border:0;
-    border-radius: 20px;
+    border-radius: 20px !important;
     padding:10px 20px;
 }
 
