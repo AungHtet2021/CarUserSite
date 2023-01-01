@@ -128,7 +128,7 @@ export default{
   </Header>
 </template>
 
-<style>
+<style scoped>
 .welcome{
     text-align: center;
     padding:20px 0;

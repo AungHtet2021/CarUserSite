@@ -141,7 +141,7 @@ export default{
         </v-alert> -->
 </template>
 
-<style>
+<style scoped>
 .img {
   margin-left: 0px;
   max-width: 120px !important;

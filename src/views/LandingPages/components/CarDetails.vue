@@ -85,6 +85,7 @@ export default {
         name: this.carDetails.name,
         quantity: this.qty,
         total: this.total,
+        image : this.carDetails.imagePath
       });
       localStorage.setItem("order", JSON.stringify(tempOrder));
     },
