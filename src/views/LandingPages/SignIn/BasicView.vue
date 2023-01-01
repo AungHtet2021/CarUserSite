@@ -65,7 +65,7 @@ export default{
                   </form>
                   </div>
       </div>
-      <footer class="footer position-absolute bottom-2 py-2 w-100">
+      <!-- <footer class="footer position-absolute bottom-2 py-2 w-100">
         <div class="container">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-12 col-md-6 my-auto">
@@ -123,12 +123,13 @@ export default{
             </div>
           </div>
         </div>
-      </footer>
+      </footer> -->
     </div>
   </Header>
 </template>
 
-<style>
+<style scoped>
+
 .welcome{
     text-align: center;
     padding:20px 0;

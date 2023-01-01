@@ -122,7 +122,7 @@ export default{
     >
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container ">
-        <div class="welcome container1">
+        <div class="welcome containerRegister">
                 <v-form ref="categoryForm " v-model="categoryForm">
                     <input type="text" name="name" placeholder="name" v-model="name" >
                     <input type="email" name="email" placeholder="email" v-model="gmail">                   
@@ -141,7 +141,7 @@ export default{
         </v-alert> -->
 </template>
 
-<style>
+<style scoped>
 .img {
   margin-left: 0px;
   max-width: 120px !important;
@@ -178,7 +178,7 @@ export default{
     margin:20px auto;
 }
 
-.container1{
+.containerRegister{
     width: 90%;
     max-width: 400px;
     margin:80px auto;
@@ -189,7 +189,7 @@ export default{
 
 button{
     text-decoration: none;
-    background: #f25417 !important;
+    background: yellow !important;
     font-weight: bold;
     border:1px solid #eee;
     border-radius: 28px !important;
