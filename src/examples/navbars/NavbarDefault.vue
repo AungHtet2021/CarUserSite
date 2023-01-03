@@ -4,7 +4,7 @@ import { ref, watch } from "vue";
 import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
-// import MaterialButton from "@/components/MaterialButton.vue";
+import MaterialButton from "@/components/MaterialButton.vue";
 import html2pdf from "html2pdf.js";
 const props = defineProps({
   action: {
@@ -99,10 +99,20 @@ export default {
       qty: 0,
       grandTotal: 0,
       cartList: [],
+      showCart : false
     };
   },
 
-  async created() {},
+  async created() {
+    this.cartList = JSON.parse(localStorage.getItem("order"));
+    if (this.cartList.length > 0) {
+      this.cartList.forEach((x) => {
+      this.grandTotal = this.grandTotal + x.total;
+    });
+      this.showCart = true;
+    }
+
+  },
 
   methods: {
     async order() {
@@ -110,6 +120,9 @@ export default {
         margin: 1,
         filename: "CustomerOrder.pdf",
       });
+      this.cartList = [];
+      this.showCart = false;
+      localStorage.removeItem('order')
     },
 
     discount() {
@@ -241,6 +254,13 @@ export default {
                       >
                         <span>Brand New</span>
                       </RouterLink>
+
+                      <RouterLink
+                        :to="{ name: 'used' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                        <span>Used</span>
+                      </RouterLink>
                     </div>
                   </div>
                 </div>
@@ -304,6 +324,72 @@ export default {
                 >shopping_cart</i
               >
             </a>
+            <div v-if="showCart"
+              class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
+              aria-labelledby="dropdownMenuPages"
+            >
+              <div class="row d-none d-lg-block">
+                <div class="col-12 px-4 py-2">
+                  <div class="row">
+                    <div class="position-relative">
+                      <template v-for="(cart, index) in cartList" :key="index">
+                        <div class="row">
+                          <div class="col-3">
+                            <img
+                              :src="this.localDomain + '/car' + cart.image"
+                              class="cartImg"
+                              :key="imageIndex"
+                            />
+                          </div>
+                          <div class="col-9">
+                            <h6 style="font-size: smaller; margin-left: 3px">
+                              {{ cart.name }}
+                            </h6>
+                            <span
+                              span
+                              style="font-size: smaller; margin-left: 3px"
+                              >Quantity:</span
+                            ><span style="font-size: smaller">{{
+                              cart.quantity
+                            }}</span
+                            ><br />
+                            <span
+                              span
+                              style="font-size: smaller; margin-left: 3px"
+                              >Price:</span
+                            ><span style="font-size: smaller">{{
+                              cart.total
+                            }} $</span
+                            ><br />
+                          </div>
+                          <hr
+                            style="
+                              height: 2px;
+                              border-width: 0;
+                              color: gray;
+                              background-color: gray;
+                            "
+                          />
+                        </div>
+                      </template>
+                      <h5 class="text-center">Total</h5>
+                      <h6 class="text-center">{{ this.grandTotal }} $</h6>
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <MaterialButton
+                            @click="order()"
+                            variant="gradient"
+                            style="background-color: #e6e600; width: 200px"
+                            class="mt-3 mb-0"
+                            >Order</MaterialButton
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a

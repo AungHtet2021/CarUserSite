@@ -38,7 +38,7 @@
               :key="imageIndex"
             />
             <h4>{{ brand.name }}</h4>
-            <h6>{{ brand.price }} $</h6>
+            <h6>{{ brand.price * (brand.percentage / 100) }} $</h6>
             <span class="more" @click="goToHome(brand.id)"> Learn More </span>
 
             <span class="discountCar"

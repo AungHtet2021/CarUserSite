@@ -1,5 +1,7 @@
 <template>
-  <h2 class="text-black" style="text-align: center;">OUR BEST AUTO SERVICES FOR YOU</h2>
+  <h2 class="text-black" style="text-align: center">
+    OUR BEST AUTO SERVICES FOR YOU
+  </h2>
   <div class="container mt-sm-5 mt-5">
     <div class="row col-md-12">
       <template v-for="(brand, index) in carList" :key="index">
@@ -10,10 +12,17 @@
             :key="imageIndex"
           />
           <h4>{{ brand.name }}</h4>
-          <h6>{{ brand.price }} $</h6>
+          <h6 v-if="!brand.percentage">{{ brand.price }} $</h6>
+          <h6 v-if="brand.percentage"> <del v-if="brand.percentage" style="color:#a59898 ;font-size: smaller;">{{ brand.price }} $</del> <span>{{ brand.price * (brand.percentage / 100) }} $</span></h6>
+          
           <span class="more" @click="goToHome(brand.id)"> Learn More </span>
 
-          <span v-if="brand.percentage" class="discountCar"><span style="font-weight: 900;font-size: larger;"> {{ brand.percentage }}% </span> <span style="font-size: small;">discount</span></span>
+          <span v-if="brand.percentage" class="discountCar"
+            ><span style="font-weight: 900; font-size: larger">
+              {{ brand.percentage }}%
+            </span>
+            <span style="font-size: small">discount</span></span
+          >
         </span>
       </template>
     </div>
@@ -27,7 +36,7 @@ export default {
   data() {
     return {
       localDomain: utils.constant.localDomain,
-      carList : [],
+      carList: [],
     };
   },
   async created() {
@@ -47,7 +56,6 @@ export default {
       this.$router.push({ name: "details", params: { id: id } });
     },
   },
-
 };
 </script>
 
@@ -55,8 +63,8 @@ export default {
 .carImg {
   border-radius: 5%;
   margin-left: 0px;
-  width: 400px !important;
-  height: 260px !important;
+  width: 92%;
+  height: 75%;
 }
 
 /* .img:hover {
