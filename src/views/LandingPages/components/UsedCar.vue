@@ -35,19 +35,19 @@ export default {
   data() {
     return {
       localDomain: utils.constant.localDomain,
-      brandNewList: [],
+      usedList: [],
       video: "",
     };
   },
 
   async created() {
-    await this.getBrandNewCarList();
+    await this.getUsedCarList();
   },
   methods: {
-    async getBrandNewCarList() {
-      const resp = await api.get("car/brand");
+    async getUsedCarList() {
+      const resp = await api.get("car/used");
       if (resp) {
-        this.brandNewList = await resp.json();
+        this.usedList = await resp.json();
       }
     },
 
@@ -75,7 +75,7 @@ export default {
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
-            <h2 class="text-white">NEW CAR</h2>
+            <h2 class="text-white">USED CAR</h2>
             <h1 style="color: yellow">FOR SALE</h1>
             <p class="lead mb-4 text-white opacity-8">
               FIND THE PERFECT CAR , FOR SALE TODAY!
@@ -86,33 +86,31 @@ export default {
     </div>
   </header>
   <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
-    <h2 class="text-black" style="text-align: center">BEST BRAND NEW</h2>
+    <h2 class="text-black" style="text-align: center">BEST USED CAR</h2>
     <div class="container">
       <div class="row col-md-12">
-        <template v-for="(brandNew, index) in brandNewList" :key="index">
+        <template v-for="(used, index) in usedList" :key="index">
           <span class="col-md-6 mt-5 imgHolder">
             <img
-              :src="this.localDomain + '/car' + brandNew.image_path"
+              :src="this.localDomain + '/car' + used.image_path"
               class="carImg"
               :key="imageIndex"
             />
-            <h4>{{ brandNew.name }}</h4>
-            <h6 v-if="!brandNew.percentage">{{ brandNew.price }} $</h6>
-            <h6 v-if="brandNew.percentage">
+            <h4>{{ used.name }}</h4>
+            <h6 v-if="!used.percentage">{{ used.price }} $</h6>
+            <h6 v-if="used.percentage">
               <del
-                v-if="brandNew.percentage"
+                v-if="used.percentage"
                 style="color: #a59898; font-size: smaller"
-                >{{ brandNew.price }} $</del
+                >{{ used.price }} $</del
               >
-              <span>{{ brandNew.price * (brandNew.percentage / 100) }} $</span>
+              <span>{{ used.price * (used.percentage / 100) }} $</span>
             </h6>
-            <span class="more" @click="goToDetail(brandNew.id)">
-              Learn More
-            </span>
+            <span class="more" @click="goToDetail(used.id)"> Learn More </span>
 
-            <span v-if="brandNew.percentage" class="discountCar"
+            <span v-if="used.percentage" class="discountCar"
               ><span style="font-weight: 900; font-size: larger">
-                {{ brandNew.percentage }}%
+                {{ used.percentage }}%
               </span>
               <span style="font-size: small">discount</span></span
             >

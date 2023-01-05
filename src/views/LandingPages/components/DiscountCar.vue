@@ -38,8 +38,8 @@
               :key="imageIndex"
             />
             <h4>{{ brand.name }}</h4>
-            <h6>{{ brand.price }} $</h6>
-            <span class="more" @click="goToHome(brand.id)"> Learn More </span>
+            <h6>{{ brand.price * (brand.percentage / 100) }} $</h6>
+            <span class="more" @click="goToDetail(brand.id)"> Learn More </span>
 
             <span class="discountCar"
               ><span style="font-weight: 900; font-size: larger">
@@ -110,7 +110,7 @@ export default {
       }
     },
 
-    goToHome(id) {
+    goToDetail(id) {
       this.$router.push({ name: "details", params: { id: id } });
     },
   },

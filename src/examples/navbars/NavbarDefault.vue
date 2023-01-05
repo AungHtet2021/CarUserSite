@@ -4,8 +4,8 @@ import { ref, watch } from "vue";
 import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
-// import MaterialButton from "@/components/MaterialButton.vue";
-import html2pdf from "html2pdf.js";
+import MaterialButton from "@/components/MaterialButton.vue";
+// import html2pdf from "html2pdf.js";
 const props = defineProps({
   action: {
     type: Object,
@@ -88,8 +88,15 @@ watch(
 </script>
 
 <script>
+// import Email from "https://smtpjs.com/v3/smtp.js";
 import utils from "../../utils/utils";
 export default {
+  mounted() {
+    let recaptchaScript = document.createElement("script");
+    recaptchaScript.setAttribute("src", "https://smtpjs.com/v3/smtp.js");
+    document.head.appendChild(recaptchaScript);
+  },
+
   data() {
     return {
       id: this.$route.params.id,
@@ -99,17 +106,59 @@ export default {
       qty: 0,
       grandTotal: 0,
       cartList: [],
+      showCart: false,
     };
   },
 
-  async created() {},
+  async created() {
+    this.getCartList();
+  },
 
   methods: {
-    async order() {
-      html2pdf(document.getElementById("element-to-convert"), {
-        margin: 1,
-        filename: "CustomerOrder.pdf",
+    getCartList() {
+      this.cartList = JSON.parse(localStorage.getItem("order"));
+    if (this.cartList.length > 0) {
+      this.cartList.forEach((x) => {
+        this.grandTotal = this.grandTotal + x.total;
       });
+      this.showCart = true;
+    } else {
+      this.showCart = false;
+    }
+
+    },
+
+    async order() {
+      // var params = {
+      //   from_name: "KhantMinThu",
+      //   email_id: "abc@gmail.com",
+      //   message: "Testing KMT 123456789",
+      // };
+      // emailjs
+      //   .send("service_9c7akkf", "template_yt46xyg".params)
+      //   .then(function (res) {
+      //     alert("testing");
+      //   });
+      Email.send({
+        SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
+        To: "aunghtetmyanmar2021@gmail.com",
+        From: "khantminthu199666@gmail.com",
+        Subject: "This is the subject",
+        Body: "Hello ,this is car guru",
+      }).then((message) => alert(message));
+      // html2pdf(document.getElementById("element-to-convert"), {
+      //   margin: 1,
+      //   filename: "CustomerOrder.pdf",
+      // });
+      // this.cartList = [];
+      // this.showCart = false;
+      // localStorage.removeItem('order')
+    },
+
+    removeFromCart(index) {
+    this.cartList.splice(this.cartList.indexOf(index), 1);
+      localStorage.setItem("order", JSON.stringify(this.cartList));
+      this.getCartList();
     },
 
     discount() {
@@ -241,6 +290,13 @@ export default {
                       >
                         <span>Brand New</span>
                       </RouterLink>
+
+                      <RouterLink
+                        :to="{ name: 'used' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                        <span>Used</span>
+                      </RouterLink>
                     </div>
                   </div>
                 </div>
@@ -304,6 +360,80 @@ export default {
                 >shopping_cart</i
               >
             </a>
+            <div
+              v-if="showCart"
+              class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
+              aria-labelledby="dropdownMenuPages"
+            >
+              <div class="row d-none d-lg-block">
+                <div class="col-12 px-4 py-2">
+                  <div class="row">
+                    <div class="position-relative">
+                      <template v-for="(cart, index) in cartList" :key="index">
+                        <div class="row">
+                          <div class="col-3">
+                            <img
+                              :src="this.localDomain + '/car' + cart.image"
+                              class="cartImg"
+                              :key="imageIndex"
+                            />
+                          </div>
+                          <div class="col-7">
+                            <h6 style="font-size: smaller; margin-left: 3px">
+                              {{ cart.name }}
+                            </h6>
+                            <span
+                              span
+                              style="font-size: smaller; margin-left: 3px"
+                              >Quantity:</span
+                            ><span style="font-size: smaller">{{
+                              cart.quantity
+                            }}</span
+                            ><br />
+                            <span
+                              span
+                              style="font-size: smaller; margin-left: 3px"
+                              >Price:</span
+                            ><span style="font-size: smaller"
+                              >{{ cart.total }} $</span
+                            ><br />
+                          </div>
+                          <div class="col-1">
+                            <i
+                              class="material-icons opacity-6 me-2 text-md mt-1"
+                              :class="getTextColor()"
+                              @click="removeFromCart(index)"
+                              >close</i
+                            >
+                          </div>
+                          <hr
+                            style="
+                              height: 2px;
+                              border-width: 0;
+                              color: gray;
+                              background-color: gray;
+                            "
+                          />
+                        </div>
+                      </template>
+                      <h5 class="text-center">Total</h5>
+                      <h6 class="text-center">{{ this.grandTotal }} $</h6>
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <MaterialButton
+                            @click="order()"
+                            variant="gradient"
+                            style="background-color: #e6e600; width: 200px"
+                            class="mt-3 mb-0"
+                            >Order</MaterialButton
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a
@@ -371,3 +501,15 @@ export default {
   border-radius: 7%;
 }
 </style>
+<!-- <script src="https://smtpjs.com/v3/smtp.js">
+</script> -->
+<!-- <script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+></script>
+<script type="text/javascript">
+(function () {
+  // https://dashboard.emailjs.com/admin/account
+  emailjs.init("BOJ88XuFYmJYIzo_7");
+})();
+</script> -->
