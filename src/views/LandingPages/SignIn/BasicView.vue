@@ -23,11 +23,29 @@ export default{
     return{
       gmail:"",
       password:"",
+      showError:false,
     }
   },
   methods:{
+    validation(){
+      var email=document.getElementById("email");
+      var password=document.getElementById("password");
+
+       if(email.value.trim()==""){
+        email.style.border="solid 3px red"
+        document.getElementById("blankEmail").style.visibility="visible";
+        return false;
+      }
+      else if(password.value.trim()==""){
+        password.style.border="solid 3px red"
+        document.getElementById("blankPassword").style.visibility="visible";
+        return false;
+      }
+      return true;
+    },
     async login(){
-      const resp = await utils.http.post("/user/login", {
+        if(this.validation()){
+          const resp = await utils.http.post("/user/login", {
             gmail: this.gmail,
             password: this.password,
           });
@@ -36,6 +54,9 @@ export default{
           }else{
             alert('Invalid Gmail & Password')
           }
+        }else{
+
+        }
     },
 
   }
@@ -56,80 +77,24 @@ export default{
       <div class="container my-auto">
        
         <div class="welcome container">
+   
                     <form @submit.prevent="signUp">
-                    <!-- <input type="text" placeholder="displayname" v-model="displayName"> -->
-                    <input type="email" placeholder="email" v-model="gmail">
-                    <input type="password" placeholder="password" v-model="password">
+                    <input type="email" id="email" placeholder="email" v-model="gmail">
+                    <span id="blankEmail" style="color:red; visibility: hidden;" >Pls Fill the Email!</span>
+                    <input type="password" id="password" placeholder="password" v-model="password">
+                    <span id="blankPassword" style="color:red; visibility: hidden;" >Pls Fill the Password!</span>
                     <div v-if="error" class="error">{{ error }}</div>
                     <button @click="login">Login</button>
                   </form>
                   </div>
+
       </div>
-      <!-- <footer class="footer position-absolute bottom-2 py-2 w-100">
-        <div class="container">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-12 col-md-6 my-auto">
-              <div
-                class="copyright text-center text-sm text-white text-lg-start"
-              >
-                © {{ new Date().getFullYear() }}, made with
-                <i class="fa fa-heart" aria-hidden="true"></i> by
-                <a
-                  href="https://www.creative-tim.com"
-                  class="font-weight-bold text-white"
-                  target="_blank"
-                  >Creative Tim</a
-                >
-                for a better web.
-              </div>
-            </div>
-            <div class="col-12 col-md-6">
-              <ul
-                class="nav nav-footer justify-content-center justify-content-lg-end"
-              >
-                <li class="nav-item">
-                  <a
-                    href="https://www.creative-tim.com"
-                    class="nav-link text-white"
-                    target="_blank"
-                    >Creative Tim</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    href="https://www.creative-tim.com/presentation"
-                    class="nav-link text-white"
-                    target="_blank"
-                    >About Us</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    href="https://www.creative-tim.com/blog"
-                    class="nav-link text-white"
-                    target="_blank"
-                    >Blog</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    href="https://www.creative-tim.com/license"
-                    class="nav-link pe-0 text-white"
-                    target="_blank"
-                    >License</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </footer> -->
+    
     </div>
   </Header>
 </template>
 
 <style scoped>
-
 .welcome{
     text-align: center;
     padding:20px 0;
@@ -152,12 +117,11 @@ export default{
     margin:10px auto;
 }
 .welcome span{
-    font-weight:bold;
-    text-decoration: underline;
-    cursor:pointer;
+  display: block;
+    margin:1px 0 1px;
 }
 .welcome button{
-    margin:20px auto;
+  margin:center !important;
 }
 
 .container{
@@ -171,9 +135,9 @@ export default{
 
 button{
     text-decoration: none;
-    background: #f25417 !important;
+    background:#00a602;
     font-weight: bold;
-    border:0;
+    border:1px solid #eee;
     border-radius: 20px !important;
     padding:10px 20px;
 }

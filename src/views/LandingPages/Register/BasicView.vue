@@ -69,11 +69,48 @@ export default{
         this.imageUrl = "";
       }
     },
+    validation(){
+      var name=document.getElementById("name");
+      var email=document.getElementById("email");
+      var password=document.getElementById("password");
+      var image=document.getElementById("image");
+      var phone=document.getElementById("phone");
+
+      if(name.value.trim()==""){
+        // alert("blank nameqwqwqwq");
+        name.style.border="solid 3px red"
+        document.getElementById("blankName").style.visibility="visible";
+        return false;
+      }
+      else if(email.value.trim()==""){
+        email.style.border="solid 3px red"
+        document.getElementById("blankEmail").style.visibility="visible";
+        return false;
+      }
+      else if(password.value.trim()==""){
+        password.style.border="solid 3px red"
+        document.getElementById("blankPassword").style.visibility="visible";
+        return false;
+      }
+      else if(image.value.trim()==""){
+        image.style.border="solid 3px red"
+        document.getElementById("blankImage").style.visibility="visible";
+        return false;
+      }
+      else if(phone.value.trim()==""){
+        phone.style.border="solid 3px red"
+        document.getElementById("blankPhone").style.visibility="visible";
+        return false;
+      }
+      return true;
+      
+    },
     async register(){
-      console.log(this.name)
-        
+    
+       
         let respPosterData=null;
-        if (this.imageFile !== "") {
+        if(this.validation()){
+          if (this.imageFile !== "") {
         const respPoster = await utils.http.postMedia(
           "/user/file/create",
           this.imageFile,
@@ -87,7 +124,14 @@ export default{
         }
         } else {
           respPosterData = this.tmpImagePath;
+          
+
         };
+        }else{
+          // console.log("fill all fields")
+          // alert("Fill all fields")
+        };
+
         if (respPosterData) {
           console.log(this.name)
           const resp = await utils.http.post("/user/register", {
@@ -124,12 +168,18 @@ export default{
       <div class="container ">
         <div class="welcome containerRegister">
                 <v-form ref="categoryForm " v-model="categoryForm">
-                    <input type="text" name="name" placeholder="name" v-model="name" >
-                    <input type="email" name="email" placeholder="email" v-model="gmail">                   
-                    <input type="password" name="password" placeholder="password" v-model="password">   
-                    <input type="file" ref="image" accept="image/*" @change="onFilePicked" >
+                    <input type="text" id="name" placeholder="name" v-model="name" >
+                    <!-- <label id="bname" style="color:red; visibility: hidden;" >Invalid</label> -->
+                    <span id="blankName" style="color:red; visibility: hidden;" >Pls Fill the Name!</span>
+                    <input type="email" id="email" placeholder="email" v-model="gmail">   
+                    <span id="blankEmail" style="color:red; visibility: hidden;" >Pls Fill the Email!</span>                
+                    <input type="password" id="password" placeholder="password" v-model="password">  
+                    <span id="blankPassword" style="color:red; visibility: hidden;" >Pls Fill the Password!</span> 
+                    <input type="file" id="image" ref="image" accept="image/*" @change="onFilePicked" >
+                    <span id="blankImage" style="color:red; visibility: hidden;" >Pls Fill the User Profile!</span>
                     <img class="img" v-if="imageUrl != ''" :src="imageUrl"  contain>           
-                    <input type="text" name="phone" placeholder="Phone Number" v-model="phone">        
+                    <input type="text" id="phone" placeholder="Phone Number" v-model="phone">    
+                    <span id="blankPhone" style="color:red; visibility: hidden;" >Pls Fill the PhoneNumber!</span>
                     <button @click="register">Register</button>
                 </v-form>  
                   </div>
@@ -150,15 +200,15 @@ export default{
 }
 .welcome{
     text-align: center;
-    padding:20px 0;
+    padding: 0;
 }
 .welcome form{
     width: 300px;
-    margin: 20px auto;
+    margin: 2px auto;
 }
-.welcome label{
+.welcome span{
     display: block;
-    margin:20px 0 10px;
+    margin:1px 0 1px;
 }
 .welcome input{
     width:100%;
@@ -169,13 +219,13 @@ export default{
     color:#999;
     margin:10px auto;
 }
-.welcome span{
+/* .welcome span{
     font-weight:bold;
-    text-decoration: underline;
+    text-decoration: none;
     cursor:pointer;
-}
+} */
 .welcome button{
-    margin:20px auto;
+    margin:center !important;
 }
 
 .containerRegister{
@@ -189,7 +239,7 @@ export default{
 
 button{
     text-decoration: none;
-    background: yellow !important;
+    background: #00a602;
     font-weight: bold;
     border:1px solid #eee;
     border-radius: 28px !important;
