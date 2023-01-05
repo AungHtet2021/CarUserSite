@@ -34,27 +34,25 @@ import api from "../../../utils/api";
 export default {
   data() {
     return {
-      id: "30",
       localDomain: utils.constant.localDomain,
-      carDetails: {},
+      brandNewList: [],
       video: "",
     };
   },
 
   async created() {
-    await this.getCarDetailById();
+    await this.getBrandNewCarList();
   },
   methods: {
-    async getCarDetailById() {
-      const resp = await api.get("car/" + this.id);
+    async getBrandNewCarList() {
+      const resp = await api.get("car/brand");
       if (resp) {
-        this.carDetails = await resp.json();
-        if (this.carDetails.video !== null && this.carDetails.video !== "") {
-          if (this.carDetails.video.includes("watch?v=")) {
-            this.video = this.carDetails.video.replace("watch?v=", "embed/");
-          }
-        }
+        this.brandNewList = await resp.json();
       }
+    },
+
+    goToDetail(id) {
+      this.$router.push({ name: "details", params: { id: id } });
     },
   },
 };
@@ -88,27 +86,38 @@ export default {
     </div>
   </header>
   <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
+    <h2 class="text-black" style="text-align: center">BEST BRAND NEW</h2>
     <div class="container">
-      <div class="row align-items-center">
-   
-        <div  class="col-lg-4" style="margin-top: 6%;">
-          <div class="card">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <a class="d-block blur-shadow-image">
-                <img
-                  :src="this.localDomain + '/car' + this.carDetails.imagePath"
-                  :alt="title"
-                  class="img-fluid border-radius-lg"
-                />
-              </a>
-            </div>
-            <div class="card-body text-center">
-              <h5 class="font-weight-normal">
-                <a href="javascript:;">{{ this.carDetails.name }}</a>
-              </h5>
-            </div>
-          </div>
-        </div>
+      <div class="row col-md-12">
+        <template v-for="(brandNew, index) in brandNewList" :key="index">
+          <span class="col-md-6 mt-5 imgHolder">
+            <img
+              :src="this.localDomain + '/car' + brandNew.image_path"
+              class="carImg"
+              :key="imageIndex"
+            />
+            <h4>{{ brandNew.name }}</h4>
+            <h6 v-if="!brandNew.percentage">{{ brandNew.price }} $</h6>
+            <h6 v-if="brandNew.percentage">
+              <del
+                v-if="brandNew.percentage"
+                style="color: #a59898; font-size: smaller"
+                >{{ brandNew.price }} $</del
+              >
+              <span>{{ brandNew.price * (brandNew.percentage / 100) }} $</span>
+            </h6>
+            <span class="more" @click="goToDetail(brandNew.id)">
+              Learn More
+            </span>
+
+            <span v-if="brandNew.percentage" class="discountCar"
+              ><span style="font-weight: 900; font-size: larger">
+                {{ brandNew.percentage }}%
+              </span>
+              <span style="font-size: small">discount</span></span
+            >
+          </span>
+        </template>
       </div>
     </div>
   </div>
@@ -118,5 +127,4 @@ export default {
 .rightSide {
   margin-bottom: 25%;
 }
-
 </style>

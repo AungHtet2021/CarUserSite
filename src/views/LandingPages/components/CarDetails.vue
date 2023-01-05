@@ -75,18 +75,30 @@ export default {
     },
 
     addToCart() {
+      var addNew = true;
       var tempOrder = [];
       var orderList = JSON.parse(localStorage.getItem("order"));
       if (orderList !== null) {
         tempOrder = orderList;
       }
 
-      tempOrder.push({
-        name: this.carDetails.name,
-        quantity: this.qty,
-        total: this.total,
-        image : this.carDetails.imagePath
+      tempOrder.forEach((element) => {
+        if (this.id == element.id) {
+          addNew = false;
+          (element.quantity = element.quantity + this.qty),
+            (element.total = element.total + this.total);
+        }
       });
+
+      if (addNew == true) {
+        tempOrder.push({
+          id: this.id,
+          name: this.carDetails.name,
+          quantity: this.qty,
+          total: this.total,
+          image: this.carDetails.imagePath,
+        });
+      }
       localStorage.setItem("order", JSON.stringify(tempOrder));
     },
   },

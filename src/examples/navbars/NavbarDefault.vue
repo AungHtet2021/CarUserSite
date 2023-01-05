@@ -5,7 +5,7 @@ import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
 import MaterialButton from "@/components/MaterialButton.vue";
-import html2pdf from "html2pdf.js";
+// import html2pdf from "html2pdf.js";
 const props = defineProps({
   action: {
     type: Object,
@@ -88,8 +88,15 @@ watch(
 </script>
 
 <script>
+// import Email from "https://smtpjs.com/v3/smtp.js";
 import utils from "../../utils/utils";
 export default {
+  mounted() {
+    let recaptchaScript = document.createElement("script");
+    recaptchaScript.setAttribute("src", "https://smtpjs.com/v3/smtp.js");
+    document.head.appendChild(recaptchaScript);
+  },
+
   data() {
     return {
       id: this.$route.params.id,
@@ -99,30 +106,59 @@ export default {
       qty: 0,
       grandTotal: 0,
       cartList: [],
-      showCart : false
+      showCart: false,
     };
   },
 
   async created() {
-    this.cartList = JSON.parse(localStorage.getItem("order"));
-    if (this.cartList.length > 0) {
-      this.cartList.forEach((x) => {
-      this.grandTotal = this.grandTotal + x.total;
-    });
-      this.showCart = true;
-    }
-
+    this.getCartList();
   },
 
   methods: {
-    async order() {
-      html2pdf(document.getElementById("element-to-convert"), {
-        margin: 1,
-        filename: "CustomerOrder.pdf",
+    getCartList() {
+      this.cartList = JSON.parse(localStorage.getItem("order"));
+    if (this.cartList.length > 0) {
+      this.cartList.forEach((x) => {
+        this.grandTotal = this.grandTotal + x.total;
       });
-      this.cartList = [];
+      this.showCart = true;
+    } else {
       this.showCart = false;
-      localStorage.removeItem('order')
+    }
+
+    },
+
+    async order() {
+      // var params = {
+      //   from_name: "KhantMinThu",
+      //   email_id: "abc@gmail.com",
+      //   message: "Testing KMT 123456789",
+      // };
+      // emailjs
+      //   .send("service_9c7akkf", "template_yt46xyg".params)
+      //   .then(function (res) {
+      //     alert("testing");
+      //   });
+      Email.send({
+        SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
+        To: "aunghtetmyanmar2021@gmail.com",
+        From: "khantminthu199666@gmail.com",
+        Subject: "This is the subject",
+        Body: "Hello ,this is car guru",
+      }).then((message) => alert(message));
+      // html2pdf(document.getElementById("element-to-convert"), {
+      //   margin: 1,
+      //   filename: "CustomerOrder.pdf",
+      // });
+      // this.cartList = [];
+      // this.showCart = false;
+      // localStorage.removeItem('order')
+    },
+
+    removeFromCart(index) {
+    this.cartList.splice(this.cartList.indexOf(index), 1);
+      localStorage.setItem("order", JSON.stringify(this.cartList));
+      this.getCartList();
     },
 
     discount() {
@@ -324,7 +360,8 @@ export default {
                 >shopping_cart</i
               >
             </a>
-            <div v-if="showCart"
+            <div
+              v-if="showCart"
               class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-md p-3 border-radius-xl mt-0 mt-lg-3"
               aria-labelledby="dropdownMenuPages"
             >
@@ -341,7 +378,7 @@ export default {
                               :key="imageIndex"
                             />
                           </div>
-                          <div class="col-9">
+                          <div class="col-7">
                             <h6 style="font-size: smaller; margin-left: 3px">
                               {{ cart.name }}
                             </h6>
@@ -357,10 +394,17 @@ export default {
                               span
                               style="font-size: smaller; margin-left: 3px"
                               >Price:</span
-                            ><span style="font-size: smaller">{{
-                              cart.total
-                            }} $</span
+                            ><span style="font-size: smaller"
+                              >{{ cart.total }} $</span
                             ><br />
+                          </div>
+                          <div class="col-1">
+                            <i
+                              class="material-icons opacity-6 me-2 text-md mt-1"
+                              :class="getTextColor()"
+                              @click="removeFromCart(index)"
+                              >close</i
+                            >
                           </div>
                           <hr
                             style="
@@ -457,3 +501,15 @@ export default {
   border-radius: 7%;
 }
 </style>
+<!-- <script src="https://smtpjs.com/v3/smtp.js">
+</script> -->
+<!-- <script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+></script>
+<script type="text/javascript">
+(function () {
+  // https://dashboard.emailjs.com/admin/account
+  emailjs.init("BOJ88XuFYmJYIzo_7");
+})();
+</script> -->

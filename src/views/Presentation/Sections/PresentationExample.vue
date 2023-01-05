@@ -3,9 +3,45 @@
     OUR BEST AUTO SERVICES FOR YOU
   </h2>
   <div class="container mt-sm-5 mt-5">
-    <div class="row col-md-12">
+    <div class="row">
       <template v-for="(brand, index) in carList" :key="index">
-        <span class="col-md-6 mt-5 imgHolder">
+        <div class="main row col-6 mt-4 home">
+          <div class="col-8">
+            <img
+              :src="this.localDomain + '/car' + brand.image_path"
+              class="mainCarImg"
+              :key="imageIndex"
+            />
+          </div>
+          <div class="col-4" style="background-color: #794e41">
+            <h5 class="text-white">{{ brand.name }}</h5>
+            <span  class="text-white" style="font-size: smaller;"> Available Quantity: {{ brand.quantity }}</span>
+            <h6 class="text-white mt-6" v-if="!brand.percentage">
+              ${{ brand.price }}
+            </h6>
+            <h6 class="text-white  mt-6" v-if="brand.percentage">
+              <del
+                class="text-white"
+                v-if="brand.percentage"
+                style="color: #a59898; font-size: smaller;font-weight: 300;"
+                >${{ brand.price }} </del
+              >
+              <span class="text-white"
+                > ${{ brand.price * (brand.percentage / 100) }}</span
+              >
+            </h6>
+            <span class="more" @click="goToHome(brand.id)"> <span class="viewDetail"> View Detail </span> </span>
+          </div>
+          <span v-if="brand.percentage" class="discountCar"
+            ><span style="font-weight: 900; font-size: larger">
+              {{ brand.percentage }}%
+            </span>
+            <span style="font-size: small">discount</span></span
+          >
+        </div>
+
+     
+        <!-- <span class="col-md-6 mt-5 imgHolder">
           <img
             :src="this.localDomain + '/car' + brand.image_path"
             class="carImg"
@@ -23,7 +59,7 @@
             </span>
             <span style="font-size: small">discount</span></span
           >
-        </span>
+        </span> -->
       </template>
     </div>
   </div>
@@ -60,6 +96,15 @@ export default {
 </script>
 
 <style>
+.main {
+  border-radius: 5%;
+}
+
+.mainCarImg {
+  width: 104%;
+  height: 223px;
+}
+
 .carImg {
   border-radius: 5%;
   margin-left: 0px;
@@ -77,6 +122,9 @@ export default {
 h1 {
   margin-top: 2%;
   text-align: center;
+}
+.home{
+  position: relative;
 }
 .imgHolder {
   padding-left: 8% !important;
@@ -105,5 +153,38 @@ h1 {
   background: red;
   height: 55px;
   text-align: center;
+}
+
+.home .more {
+  cursor: pointer;
+  color: black;
+  position: absolute;
+  bottom: 8%;
+  left: 69%;
+  width: 142px;
+  background: white;
+  height: 30px;
+  text-align: center;
+}
+
+.home .discountCar {
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  bottom: 75%;
+  left: 4.4%;
+  width: 83px;
+  background: red;
+  height: 55px;
+  text-align: center;
+}
+
+.viewDetail {
+  font-size: small;
+  font-weight: 500;
+}
+
+.row {
+  margin-left: 0px !important;
 }
 </style>
