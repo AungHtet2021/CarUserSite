@@ -1,16 +1,8 @@
 <script setup>
 import { onMounted } from "vue";
-
-// example components
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
 import Header from "@/examples/Header.vue";
-
-//Vue Material Kit 2 components
-import MaterialInput from "@/components/MaterialInput.vue";
-import MaterialSwitch from "@/components/MaterialSwitch.vue";
-import MaterialButton from "@/components/MaterialButton.vue";
 import image from "@/assets/img/car-image.jpg";
-// material-input
 import setMaterialInput from "@/assets/js/material-input";
 onMounted(() => {
   setMaterialInput();
@@ -58,9 +50,8 @@ export default{
 
         }
     },
-
-  }
-}
+  },
+};
 </script>
 <template>
   <DefaultNavbar transparent />
@@ -68,14 +59,12 @@ export default{
     <div
       class="page-header align-items-start min-vh-100"
       :style="{
-        backgroundImage:
-        `url(${image})`
+        backgroundImage: `url(${image})`,
       }"
       loading="lazy"
     >
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container my-auto">
-       
         <div class="welcome container">
    
                     <form @submit.prevent="signUp">
@@ -95,26 +84,26 @@ export default{
 </template>
 
 <style scoped>
-.welcome{
-    text-align: center;
-    padding:20px 0;
+.welcome {
+  text-align: center;
+  padding: 20px 0;
 }
-.welcome form{
-    width: 300px;
-    margin: 20px auto;
+.welcome form {
+  width: 300px;
+  margin: 20px auto;
 }
-.welcome label{
-    display: block;
-    margin:20px 0 10px;
+.welcome label {
+  display: block;
+  margin: 20px 0 10px;
 }
-.welcome input{
-    width:100%;
-    padding:10px;
-    border-radius:20px;
-    border:1px solid #eee;
-    outline:none;
-    color:#999;
-    margin:10px auto;
+.welcome input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+  outline: none;
+  color: #999;
+  margin: 10px auto;
 }
 .welcome span{
   display: block;
@@ -124,13 +113,13 @@ export default{
   margin:center !important;
 }
 
-.container{
-    width: 90%;
-    max-width: 400px;
-    margin:30px auto;
-    border-radius: 20px;
-    box-shadow: 2px 4px 6px rgba(28,6, 49, 0.1);
-    /* background:black; */
+.container {
+  width: 90%;
+  max-width: 400px;
+  margin: 30px auto;
+  border-radius: 20px;
+  box-shadow: 2px 4px 6px rgba(28, 6, 49, 0.1);
+  /* background:black; */
 }
 
 button{
@@ -141,5 +130,4 @@ button{
     border-radius: 20px !important;
     padding:10px 20px;
 }
-
 </style>

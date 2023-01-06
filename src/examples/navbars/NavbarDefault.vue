@@ -117,46 +117,53 @@ export default {
   methods: {
     getCartList() {
       this.cartList = JSON.parse(localStorage.getItem("order"));
-    if (this.cartList.length > 0) {
-      this.cartList.forEach((x) => {
-        this.grandTotal = this.grandTotal + x.total;
-      });
-      this.showCart = true;
-    } else {
-      this.showCart = false;
-    }
-
+      if (this.cartList.length > 0) {
+        this.cartList.forEach((x) => {
+          this.grandTotal = this.grandTotal + x.total;
+        });
+        this.showCart = true;
+      } else {
+        this.showCart = false;
+      }
     },
 
     async order() {
-      // var params = {
-      //   from_name: "KhantMinThu",
-      //   email_id: "abc@gmail.com",
-      //   message: "Testing KMT 123456789",
-      // };
-      // emailjs
-      //   .send("service_9c7akkf", "template_yt46xyg".params)
-      //   .then(function (res) {
-      //     alert("testing");
-      //   });
-      Email.send({
-        SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
-        To: "aunghtetmyanmar2021@gmail.com",
-        From: "khantminthu199666@gmail.com",
-        Subject: "This is the subject",
-        Body: "Hello ,this is car guru",
-      }).then((message) => alert(message));
-      // html2pdf(document.getElementById("element-to-convert"), {
-      //   margin: 1,
-      //   filename: "CustomerOrder.pdf",
-      // });
-      // this.cartList = [];
-      // this.showCart = false;
-      // localStorage.removeItem('order')
+      const user = JSON.parse(localStorage.getItem("current-user"));
+      if (user) {
+        let tmp;
+        this.cartList.forEach((x) => {
+          tmp =
+            "Hey NanHninSetWei" +
+            "\nCar Name: " +
+            x.name +
+            "; Quantity: " +
+            x.quantity +
+            "; Price: " +
+            x.total +
+            "\nHave a nice day!" +
+            "\nThank you \nCar GuRu Team" ;
+        });
+        Email.send({
+          SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
+          To: "nanhninsetwai@gmail.com",
+          From: "khantminthu199666@gmail.com",
+          Subject: "Car Order Notification",
+          Body: tmp,
+        }).then((message) => alert(message));
+        // html2pdf(document.getElementById("element-to-convert"), {
+        //   margin: 1,
+        //   filename: "CustomerOrder.pdf",
+        // });
+        // this.cartList = [];
+        // this.showCart = false;
+        // localStorage.removeItem('order')
+      } else {
+        this.$router.push({ name: "signin-basic" });
+      }
     },
 
     removeFromCart(index) {
-    this.cartList.splice(this.cartList.indexOf(index), 1);
+      this.cartList.splice(this.cartList.indexOf(index), 1);
       localStorage.setItem("order", JSON.stringify(this.cartList));
       this.getCartList();
     },
