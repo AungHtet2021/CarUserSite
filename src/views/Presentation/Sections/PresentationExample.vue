@@ -14,23 +14,27 @@
             />
           </div>
           <div class="col-4" style="background-color: #794e41">
-            <h5 class="text-white">{{ brand.name }}</h5>
-            <span  class="text-white" style="font-size: smaller;"> Available Quantity: {{ brand.quantity }}</span>
+            <h5 class="text-white mt-2">{{ brand.name }}</h5>
+            <span class="text-white" style="font-size: smaller">
+              Available Quantity: {{ brand.quantity }}</span
+            >
             <h6 class="text-white mt-6" v-if="!brand.percentage">
               ${{ brand.price }}
             </h6>
-            <h6 class="text-white  mt-6" v-if="brand.percentage">
+            <h6 class="text-white mt-6" v-if="brand.percentage">
               <del
                 class="text-white"
                 v-if="brand.percentage"
-                style="color: #a59898; font-size: smaller;font-weight: 300;"
-                >${{ brand.price }} </del
-              >
-              <span class="text-white"
-                > ${{ brand.price * (brand.percentage / 100) }}</span
+                style="color: #a59898; font-size: smaller; font-weight: 300"
+                >${{ brand.price }}
+              </del>
+              <span class="text-white">
+                ${{ brand.price * (brand.percentage / 100) }}</span
               >
             </h6>
-            <span class="more" @click="goToHome(brand.id)"> <span class="viewDetail"> View Detail </span> </span>
+            <span class="more" @click="goToHome(brand.id)">
+              <span class="viewDetail"> View Detail </span>
+            </span>
           </div>
           <span v-if="brand.percentage" class="discountCar"
             ><span style="font-weight: 900; font-size: larger">
@@ -40,7 +44,6 @@
           >
         </div>
 
-     
         <!-- <span class="col-md-6 mt-5 imgHolder">
           <img
             :src="this.localDomain + '/car' + brand.image_path"
@@ -123,7 +126,7 @@ h1 {
   margin-top: 2%;
   text-align: center;
 }
-.home{
+.home {
   position: relative;
 }
 .imgHolder {

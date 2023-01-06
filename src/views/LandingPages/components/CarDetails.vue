@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     async getCarDetailById() {
-      const resp = await api.get("car/" + this.id);
+      const resp = await api.get("car/detail/" + this.id);
       if (resp) {
         this.carDetails = await resp.json();
         this.price = parseInt(this.carDetails.price);
@@ -96,7 +96,7 @@ export default {
           name: this.carDetails.name,
           quantity: this.qty,
           total: this.total,
-          image: this.carDetails.imagePath,
+          image: this.carDetails.image_path,
         });
       }
       localStorage.setItem("order", JSON.stringify(tempOrder));
@@ -149,7 +149,7 @@ export default {
             <div class="row">
               <div class="col-4"><h5>Category</h5></div>
               <div class="col-4">
-                <h5>: {{ this.carDetails.categoryId }}</h5>
+                <h5>: {{ this.carDetails.category_name }}</h5>
               </div>
             </div>
 
@@ -163,13 +163,14 @@ export default {
             <div class="row">
               <div class="col-4"><h5>Inventory Type</h5></div>
               <div class="col-4">
-                <h5>: {{ this.carDetails.status }}</h5>
+                <h5 v-if="this.carDetails.status == '1'">: Brand New </h5>
+                <h5 v-if="this.carDetails.status == '2'">: Used </h5>
               </div>
             </div>
 
-            <p>
+            <div style="font-size: smaller;color: #9a9089;margin-left: 11px;">
               {{ this.carDetails.description }}
-            </p>
+            </div>
           </div>
 
           <iframe width="100%" height="400" :src="this.video" frameborder="0">
@@ -180,14 +181,14 @@ export default {
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <a class="d-block blur-shadow-image">
                 <img
-                  :src="this.localDomain + '/car' + this.carDetails.imagePath"
+                  :src="this.localDomain + '/car' + this.carDetails.image_path"
                   :alt="title"
                   class="img-fluid border-radius-lg"
                 />
               </a>
             </div>
             <div class="discount">
-              <h3 class="text-white text-center">20%</h3>
+              <h3 class="text-white text-center"> {{ this.carDetails.percentage }}%</h3>
               <h6 class="text-white text-center" style="font-size: small">
                 Discount
               </h6>
@@ -252,5 +253,9 @@ export default {
 .material-icons {
   cursor: pointer;
   font-size: 24px !important;
+}
+
+.h5 {
+  font-weight: 400;
 }
 </style>
