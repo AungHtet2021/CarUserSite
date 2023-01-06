@@ -16,6 +16,8 @@ export default{
       gmail:"",
       password:"",
       showError:false,
+      userData:{},
+
     }
   },
   methods:{
@@ -42,6 +44,10 @@ export default{
             password: this.password,
           });
           if(resp.status==200){
+            const data = await resp.json();
+            // console.log(data.gmail)
+            this.userData=data;
+            // console.log(this.userData.gmail)
             this.$router.push({ path: "/" });
           }else{
             alert('Invalid Gmail & Password')
