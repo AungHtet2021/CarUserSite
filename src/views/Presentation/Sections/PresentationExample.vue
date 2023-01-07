@@ -18,19 +18,17 @@
             <span class="text-white" style="font-size: smaller">
               Available Quantity: {{ brand.quantity }}</span
             >
-            <h6 class="text-white mt-6" v-if="!brand.percentage">
+            <h6 class="text-white mt-5" v-if="!brand.percentage">
               ${{ brand.price }}
             </h6>
-            <h6 class="text-white mt-6" v-if="brand.percentage">
+            <h6 class="text-white mt-5" v-if="brand.percentage">
               <del
                 class="text-white"
                 v-if="brand.percentage"
                 style="color: #a59898; font-size: smaller; font-weight: 300"
                 >${{ brand.price }}
               </del>
-              <span class="text-white">
-                ${{ brand.price * (brand.percentage / 100) }}</span
-              >
+              <span class="text-white"> ${{ brand.discountPrice }}</span>
             </h6>
             <span class="more" @click="goToHome(brand.id)">
               <span class="viewDetail"> View Detail </span>
@@ -86,6 +84,11 @@ export default {
       const resp = await api.get("car/trend");
       if (resp) {
         this.carList = await resp.json();
+        this.carList.forEach((x) => {
+          x.discountPrice = (x.price - x.price * (x.percentage / 100)).toFixed(
+            2
+          );
+        });
       } else {
         console.log("something wrong");
       }

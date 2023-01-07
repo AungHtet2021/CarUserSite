@@ -48,6 +48,11 @@ export default {
       const resp = await api.get("car/used");
       if (resp) {
         this.usedList = await resp.json();
+        this.usedList.forEach((x) => {
+          x.discountPrice = (x.price - x.price * (x.percentage / 100)).toFixed(
+            2
+          );
+        });
       }
     },
 
@@ -104,7 +109,7 @@ export default {
                 style="color: #a59898; font-size: smaller"
                 >{{ used.price }} $</del
               >
-              <span>{{ used.price * (used.percentage / 100) }} $</span>
+              <span>{{ used.discountPrice }} $</span>
             </h6>
             <span class="more" @click="goToDetail(used.id)"> Learn More </span>
 

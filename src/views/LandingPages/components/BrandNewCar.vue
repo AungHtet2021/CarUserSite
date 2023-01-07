@@ -48,6 +48,11 @@ export default {
       const resp = await api.get("car/brand");
       if (resp) {
         this.brandNewList = await resp.json();
+        this.brandNewList.forEach((x) => {
+          x.discountPrice = (x.price - x.price * (x.percentage / 100)).toFixed(
+            2
+          );
+        });
       }
     },
 
@@ -102,9 +107,9 @@ export default {
               <del
                 v-if="brandNew.percentage"
                 style="color: #a59898; font-size: smaller"
-                >{{ brandNew.price }} $</del
+                >${{ brandNew.price }} </del
               >
-              <span>{{ brandNew.price * (brandNew.percentage / 100) }} $</span>
+              <span>${{ brandNew.discountPrice }} </span>
             </h6>
             <span class="more" @click="goToDetail(brandNew.id)">
               Learn More

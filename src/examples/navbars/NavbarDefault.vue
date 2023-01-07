@@ -5,7 +5,7 @@ import { useWindowsWidth } from "../../assets/js/useWindowsWidth";
 import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
 import MaterialButton from "@/components/MaterialButton.vue";
-// import html2pdf from "html2pdf.js";
+import html2pdf from "html2pdf.js";
 const props = defineProps({
   action: {
     type: Object,
@@ -128,35 +128,51 @@ export default {
     },
 
     async order() {
-      const user = JSON.parse(localStorage.getItem("current-user"));
+      const user = JSON.parse(localStorage.getItem("currentUser"));
       if (user) {
-        let tmp;
+        let tmp = "<p>Hey " + user.userName + "</p>";
         this.cartList.forEach((x) => {
           tmp =
-            "Hey NanHninSetWei" +
-            "\nCar Name: " +
+            tmp +
+            "<p>Car Name: " +
             x.name +
             "; Quantity: " +
             x.quantity +
-            "; Price: " +
+            "; Price: $" +
             x.total +
-            "\nHave a nice day!" +
-            "\nThank you \nCar GuRu Team" ;
+            "</p>";
         });
+        tmp =
+          tmp +
+          "<p>Have a nice day!</p>" +
+          "<p>Thank you<p>" +
+          "<p>Car Guru Team</p>";
         Email.send({
           SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
-          To: "nanhninsetwai@gmail.com",
+          To: user.email,
           From: "khantminthu199666@gmail.com",
           Subject: "Car Order Notification",
           Body: tmp,
-        }).then((message) => alert(message));
+        }).then((message) => alert(message + "Please Check Your Email"));
+
+        // let orderData = [];
+        // this.cartList.forEach(x => {
+        //   const orderTmp = {
+        //     carId : x.id,
+        //     userId : user.id,
+        //     total : x.total,
+        //     carQuantity : x.quantity
+        //   }
+        // })
+        // const respCar = await utils.http.post("/car/create", {});
+
         // html2pdf(document.getElementById("element-to-convert"), {
         //   margin: 1,
         //   filename: "CustomerOrder.pdf",
         // });
-        // this.cartList = [];
-        // this.showCart = false;
-        // localStorage.removeItem('order')
+        this.cartList = [];
+        this.showCart = false;
+        localStorage.removeItem("order");
       } else {
         this.$router.push({ name: "signin-basic" });
       }
@@ -345,7 +361,7 @@ export default {
               <i
                 class="material-icons opacity-6 me-2 text-md"
                 :class="getTextColor()"
-                >local_atm</i
+                >diversity_3</i
               >
               About us
             </a>
@@ -392,7 +408,7 @@ export default {
                             <span
                               span
                               style="font-size: smaller; margin-left: 3px"
-                              >Quantity:</span
+                              >Quantity: </span
                             ><span style="font-size: smaller">{{
                               cart.quantity
                             }}</span
@@ -400,9 +416,9 @@ export default {
                             <span
                               span
                               style="font-size: smaller; margin-left: 3px"
-                              >Price:</span
+                              >Price: </span
                             ><span style="font-size: smaller"
-                              >{{ cart.total }} $</span
+                              >${{ cart.total }} </span
                             ><br />
                           </div>
                           <div class="col-1">
@@ -424,7 +440,7 @@ export default {
                         </div>
                       </template>
                       <h5 class="text-center">Total</h5>
-                      <h6 class="text-center">{{ this.grandTotal }} $</h6>
+                      <h6 class="text-center">${{ this.grandTotal }}</h6>
                       <div class="row">
                         <div class="col-md-12 text-center">
                           <MaterialButton

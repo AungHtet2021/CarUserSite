@@ -4,9 +4,8 @@ import HorizontalTeamCard from "@/examples/cards/teamCards/HorizontalTeamCard.vu
 
 // images
 import Khant from "@/assets/img/kmt2.jpg";
-import william from "@/assets/img/bruce-mars.jpg";
-import ivana from "@/assets/img/ivana-squares.jpg";
-import marquez from "@/assets/img/ivana-square.jpg";
+import kyi from "@/assets/img/kyiminkhant.jpg";
+import aung from "@/assets/img/aunghtet.jpg";
 </script>
 
 <template>
@@ -28,44 +27,35 @@ import marquez from "@/assets/img/ivana-square.jpg";
           <HorizontalTeamCard
             class="mt-4"
             :image="Khant"
-            :profile="{ name: 'Emma Roberts', link: 'javascript:;' }"
-            :position="{ label: 'UI Designer', color: 'success' }"
-            description="Artist is a term applied to a person who engages in an
-                    activity deemed to be an art."
+            :profile="{ name: 'Khant Min Thu', link: 'javascript:;' }"
+            :position="{ label: 'Full Stack Developer', color: 'success' }"
+            description="A full-stack developer is a developer or engineer who can build both the front end and the back end of a website."
           />
         </div>
         <div class="col-lg-6 col-12">
           <HorizontalTeamCard
             class="mt-lg-4 mt-5"
-            :image="william"
-            :profile="{ name: 'William Pearce', link: 'javascript:;' }"
-            :position="{ label: 'Boss', color: 'success' }"
-            description="Artist is a term applied to a person who engages in an
-                    activity deemed to be an art."
+            :image="kyi"
+            :profile="{ name: 'Kyi Min Khant', link: 'javascript:;' }"
+            :position="{ label: 'Full Stack Developer', color: 'success' }"
+            description="A full-stack developer is a developer or engineer who can build both the front end and the back end of a website."
           />
         </div>
       </div>
       <div class="row mt-4">
+        <div class="col-lg-3 col-12">
+
+        </div>
         <div class="col-lg-6 col-12">
           <HorizontalTeamCard
             class="mt-4 z-index-2"
-            :image="ivana"
-            :profile="{ name: 'Ivana Flow', link: 'javascript:;' }"
-            :position="{ label: 'Athlete', color: 'success' }"
-            description="Artist is a term applied to a person who engages in an
-                    activity deemed to be an art."
+            :image="aung"
+            :profile="{ name: 'Aung Htet', link: 'javascript:;' }"
+            :position="{ label: 'Full Stack Developer', color: 'success' }"
+            description="A full-stack developer is a developer or engineer who can build both the front end and the back end of a website."
           />
         </div>
-        <div class="col-lg-6 col-12">
-          <HorizontalTeamCard
-            class="mt-lg-4 mt-5 z-index-2"
-            :image="marquez"
-            :profile="{ name: 'Marquez Garcia', link: 'javascript:;' }"
-            :position="{ label: 'JS Developer', color: 'success' }"
-            description="Artist is a term applied to a person who engages in an
-                    activity deemed to be an art."
-          />
-        </div>
+
       </div>
     </div>
   </section>

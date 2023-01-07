@@ -38,7 +38,7 @@
               :key="imageIndex"
             />
             <h4>{{ brand.name }}</h4>
-            <h6>{{ brand.price * (brand.percentage / 100) }} $</h6>
+            <h6>${{ brand.discountPrice }}</h6>
             <span class="more" @click="goToDetail(brand.id)"> Learn More </span>
 
             <span class="discountCar"
@@ -105,6 +105,11 @@ export default {
       const resp = await api.get("car/discount");
       if (resp) {
         this.carList = await resp.json();
+        this.carList.forEach((x) => {
+          x.discountPrice = (x.price - x.price * (x.percentage / 100)).toFixed(
+            2
+          );
+        });
       } else {
         console.log("something wrong");
       }

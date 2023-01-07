@@ -10,51 +10,53 @@ onMounted(() => {
 </script>
 <script>
 import utils from "../../../utils/utils";
-export default{
-  data(){
-    return{
-      gmail:"",
-      password:"",
-      showError:false,
-      userData:{},
-
-    }
+export default {
+  data() {
+    return {
+      gmail: "",
+      password: "",
+      showError: false,
+      userData: {},
+    };
   },
-  methods:{
-    validation(){
-      var email=document.getElementById("email");
-      var password=document.getElementById("password");
+  methods: {
+    validation() {
+      var email = document.getElementById("email");
+      var password = document.getElementById("password");
 
-       if(email.value.trim()==""){
-        email.style.border="solid 3px red"
-        document.getElementById("blankEmail").style.visibility="visible";
+      if (email.value.trim() == "") {
+        email.style.border = "solid 3px red";
+        document.getElementById("blankEmail").style.visibility = "visible";
         return false;
-      }
-      else if(password.value.trim()==""){
-        password.style.border="solid 3px red"
-        document.getElementById("blankPassword").style.visibility="visible";
+      } else if (password.value.trim() == "") {
+        password.style.border = "solid 3px red";
+        document.getElementById("blankPassword").style.visibility = "visible";
         return false;
       }
       return true;
     },
-    async login(){
-        if(this.validation()){
-          const resp = await utils.http.post("/user/login", {
-            gmail: this.gmail,
-            password: this.password,
-          });
-          if(resp.status==200){
-            const data = await resp.json();
-            // console.log(data.gmail)
-            this.userData=data;
-            // console.log(this.userData.gmail)
-            this.$router.push({ path: "/" });
-          }else{
-            alert('Invalid Gmail & Password')
+    async login() {
+      if (this.validation()) {
+        const resp = await utils.http.post("/user/login", {
+          gmail: this.gmail,
+          password: this.password,
+        });
+        if (resp.status == 200) {
+          const data = await resp.json();
+          const userData = {
+            id:data.id,
+            userName : data.name,
+            email : data.gmail,
           }
-        }else{
-
+          localStorage.setItem("currentUser", JSON.stringify(userData));
+          // console.log(data.gmail)
+          this.userData = data;
+          // console.log(this.userData.gmail)
+          this.$router.push({ path: "/" });
+        } else {
+          alert("Invalid Gmail Or Password");
         }
+      } 
     },
   },
 };
@@ -72,19 +74,30 @@ export default{
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container my-auto">
         <div class="welcome container">
-   
-                    <form @submit.prevent="signUp">
-                    <input type="email" id="email" placeholder="email" v-model="gmail">
-                    <span id="blankEmail" style="color:red; visibility: hidden;" >Pls Fill the Email!</span>
-                    <input type="password" id="password" placeholder="password" v-model="password">
-                    <span id="blankPassword" style="color:red; visibility: hidden;" >Pls Fill the Password!</span>
-                    <div v-if="error" class="error">{{ error }}</div>
-                    <button @click="login">Login</button>
-                  </form>
-                  </div>
-
+          <form @submit.prevent="signUp">
+            <input
+              type="email"
+              id="email"
+              placeholder="email"
+              v-model="gmail"
+            />
+            <span id="blankEmail" style="color: red; visibility: hidden"
+              >Pls Fill the Email!</span
+            >
+            <input
+              type="password"
+              id="password"
+              placeholder="password"
+              v-model="password"
+            />
+            <span id="blankPassword" style="color: red; visibility: hidden"
+              >Pls Fill the Password!</span
+            >
+            <div v-if="error" class="error">{{ error }}</div>
+            <button @click="login">Login</button>
+          </form>
+        </div>
       </div>
-    
     </div>
   </Header>
 </template>
@@ -111,12 +124,12 @@ export default{
   color: #999;
   margin: 10px auto;
 }
-.welcome span{
+.welcome span {
   display: block;
-    margin:1px 0 1px;
+  margin: 1px 0 1px;
 }
-.welcome button{
-  margin:center !important;
+.welcome button {
+  margin: center !important;
 }
 
 .container {
@@ -128,12 +141,12 @@ export default{
   /* background:black; */
 }
 
-button{
-    text-decoration: none;
-    background:#00a602;
-    font-weight: bold;
-    border:1px solid #eee;
-    border-radius: 20px !important;
-    padding:10px 20px;
+button {
+  text-decoration: none;
+  background: #00a602;
+  font-weight: bold;
+  border: 1px solid #eee;
+  border-radius: 20px !important;
+  padding: 10px 20px;
 }
 </style>

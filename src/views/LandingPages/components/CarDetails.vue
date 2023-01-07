@@ -53,6 +53,10 @@ export default {
       const resp = await api.get("car/detail/" + this.id);
       if (resp) {
         this.carDetails = await resp.json();
+        this.carDetails.price = (
+          this.carDetails.price -
+          this.carDetails.price * (this.carDetails.percentage / 100)
+        ).toFixed(2);
         this.price = parseInt(this.carDetails.price);
         if (this.carDetails.video !== null && this.carDetails.video !== "") {
           if (this.carDetails.video.includes("watch?v=")) {
@@ -100,6 +104,7 @@ export default {
         });
       }
       localStorage.setItem("order", JSON.stringify(tempOrder));
+      this.$router.push({ name: "presentation" });
     },
   },
 };
@@ -156,19 +161,19 @@ export default {
             <div class="row">
               <div class="col-4"><h5>Price</h5></div>
               <div class="col-4">
-                <h5>: {{ this.carDetails.price }}$</h5>
+                <h5>: ${{ this.carDetails.price }}</h5>
               </div>
             </div>
 
             <div class="row">
               <div class="col-4"><h5>Inventory Type</h5></div>
               <div class="col-4">
-                <h5 v-if="this.carDetails.status == '1'">: Brand New </h5>
-                <h5 v-if="this.carDetails.status == '2'">: Used </h5>
+                <h5 v-if="this.carDetails.status == '1'">: Brand New</h5>
+                <h5 v-if="this.carDetails.status == '2'">: Used</h5>
               </div>
             </div>
 
-            <div style="font-size: smaller;color: #9a9089;margin-left: 11px;">
+            <div style="font-size: smaller; color: #9a9089; margin-left: 11px">
               {{ this.carDetails.description }}
             </div>
           </div>
@@ -187,8 +192,10 @@ export default {
                 />
               </a>
             </div>
-            <div class="discount">
-              <h3 class="text-white text-center"> {{ this.carDetails.percentage }}%</h3>
+            <div v-if="this.carDetails.percentage" class="discount">
+              <h3 class="text-white text-center">
+                {{ this.carDetails.percentage }}%
+              </h3>
               <h6 class="text-white text-center" style="font-size: small">
                 Discount
               </h6>
