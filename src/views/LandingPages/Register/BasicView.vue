@@ -164,7 +164,7 @@ export default{
       }"
       loading="lazy"
     >
-      <span class="mask bg-gradient-dark opacity-6"></span>
+      <span class="mask bg-gradient-dark opacity-3"></span>
       <div class="container ">
         <div class="welcome containerRegister">
                 <v-form ref="categoryForm " v-model="categoryForm">

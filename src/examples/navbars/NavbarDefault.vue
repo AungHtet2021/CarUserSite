@@ -328,6 +328,28 @@ export default {
           </li>
         </ul>
 
+        <!-- testdrive -->
+
+        <!-- <ul @click="discount()" class="navbar-nav navbar-nav-hover ms-auto">
+          <li class="nav-item dropdown dropdown-hover mx-2">
+            <a
+              role="button"
+              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+              :class="getTextColor()"
+              id="dropdownMenuPages"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >directions_car</i
+              >
+              Test Drive
+            </a>
+          </li>
+        </ul> -->
+
         <ul @click="discount()" class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a
@@ -468,9 +490,9 @@ export default {
               aria-expanded="false"
             >
               <i
-                class="material-icons opacity-6 me-2 text-md"
+                class="material-icons opacity-50 me-2 text-md"
                 :class="getTextColor()"
-                >dashboard</i
+                >settings</i
               >
               Account
               <img
@@ -496,6 +518,11 @@ export default {
                         :to="{ name: 'signin-basic' }"
                         class="dropdown-item border-radius-md"
                       >
+                      <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >login</i
+              >
                         <span>Sign In</span>
                       </RouterLink>
 
@@ -503,7 +530,24 @@ export default {
                         :to="{ name: 'register-basic' }"
                         class="dropdown-item border-radius-md"
                       >
+                      <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >app_registration</i
+              >
                         <span>Register</span>
+                      </RouterLink>
+                      <!-- User Profile -->
+                      <RouterLink
+                        :to="{ name: 'about-user' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                      <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >account_circle</i
+              >
+                        <span>Profile</span>
                       </RouterLink>
                     </div>
                   </div>
@@ -517,7 +561,7 @@ export default {
   </nav>
   <!-- End Navbar -->
 </template>
-<style>
+<style >
 .cartImg {
   width: 45px;
   height: 37px;

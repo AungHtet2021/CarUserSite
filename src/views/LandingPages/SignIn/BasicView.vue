@@ -10,60 +10,64 @@ onMounted(() => {
 </script>
 <script>
 import utils from "../../../utils/utils";
+// import UserInformation from "../AboutUs/Sections/UserInformation.vue";
 export default {
-  data() {
-    return {
-      gmail: "",
-      password: "",
-      showError: false,
-      userData: {},
-    };
-  },
-  methods: {
-    validation() {
-      var email = document.getElementById("email");
-      var password = document.getElementById("password");
-
-      if (email.value.trim() == "") {
-        email.style.border = "solid 3px red";
-        document.getElementById("blankEmail").style.visibility = "visible";
-        return false;
-      } else if (password.value.trim() == "") {
-        password.style.border = "solid 3px red";
-        document.getElementById("blankPassword").style.visibility = "visible";
-        return false;
-      }
-      return true;
+    data() {
+        return {
+            gmail: "",
+            password: "",
+            showError: false,
+            userData: {},
+        };
     },
-    async login() {
-      if (this.validation()) {
-        const resp = await utils.http.post("/user/login", {
-          gmail: this.gmail,
-          password: this.password,
-        });
-        if (resp.status == 200) {
-          const data = await resp.json();
-          const userData = {
-            id:data.id,
-            userName : data.name,
-            email : data.gmail,
-          }
-          localStorage.setItem("currentUser", JSON.stringify(userData));
-          // console.log(data.gmail)
-          this.userData = data;
-          // console.log(this.userData.gmail)
-          this.$router.push({ path: "/" });
-        } else {
-          alert("Invalid Gmail Or Password");
-        }
-      } 
+    methods: {
+        validation() {
+            var email = document.getElementById("email");
+            var password = document.getElementById("password");
+            if (email.value.trim() == "") {
+                email.style.border = "solid 3px red";
+                document.getElementById("blankEmail").style.visibility = "visible";
+                return false;
+            }
+            else if (password.value.trim() == "") {
+                password.style.border = "solid 3px red";
+                document.getElementById("blankPassword").style.visibility = "visible";
+                return false;
+            }
+            return true;
+        },
+        async login() {
+            if (this.validation()) {
+                const resp = await utils.http.post("/user/login", {
+                    gmail: this.gmail,
+                    password: this.password,
+                });
+                if (resp.status == 200) {
+                    const data = await resp.json();
+                    const userData = {
+                        id: data.id,
+                        userName: data.name,
+                        email: data.gmail,
+                    };
+                    localStorage.setItem("currentUser", JSON.stringify(userData));
+                    // console.log(data.gmail)
+                    this.userData = data;
+                    // console.log(this.userData.id)
+                    this.$router.push({ path: "/" });
+                }
+                else {
+                    alert("Invalid Gmail Or Password");
+                }
+            }
+        },
     },
-  },
+    // components: { UserInformation }
 };
 </script>
 <template>
+  <!-- <UserInformation :userId="userData.id"></UserInformation> -->
   <DefaultNavbar transparent />
-  <Header>
+  <Header >
     <div
       class="page-header align-items-start min-vh-100"
       :style="{
@@ -71,7 +75,7 @@ export default {
       }"
       loading="lazy"
     >
-      <span class="mask bg-gradient-dark opacity-6"></span>
+      <span class="mask bg-gradient-dark opacity-3"></span>
       <div class="container my-auto">
         <div class="welcome container">
           <form @submit.prevent="signUp">
