@@ -165,7 +165,7 @@ export default {
           };
           orderData.push(orderTmp);
         });
-        const respCar = await utils.http.post("/order/create", { orderData });
+        const respCar = await utils.http.post("/order/create",  orderData );
 
         // html2pdf(document.getElementById("element-to-convert"), {
         //   margin: 1,
