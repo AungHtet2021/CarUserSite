@@ -130,49 +130,50 @@ export default {
     async order() {
       const user = JSON.parse(localStorage.getItem("currentUser"));
       if (user) {
-        let tmp = "<p>Hey " + user.userName + "</p>";
-        this.cartList.forEach((x) => {
-          tmp =
-            tmp +
-            "<p>Car Name: " +
-            x.name +
-            "; Quantity: " +
-            x.quantity +
-            "; Price: $" +
-            x.total +
-            "</p>";
-        });
-        tmp =
-          tmp +
-          "<p>Have a nice day!</p>" +
-          "<p>Thank you<p>" +
-          "<p>Car Guru Team</p>";
-        Email.send({
-          SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
-          To: user.email,
-          From: "khantminthu199666@gmail.com",
-          Subject: "Car Order Notification",
-          Body: tmp,
-        }).then((message) => alert(message + "Please Check Your Email"));
+        // let tmp = "<p>Hey " + user.userName + "</p>";
+        // this.cartList.forEach((x) => {
+        //   tmp =
+        //     tmp +
+        //     "<p>Car Name: " +
+        //     x.name +
+        //     "; Quantity: " +
+        //     x.quantity +
+        //     "; Price: $" +
+        //     x.total +
+        //     "</p>";
+        // });
+        // tmp =
+        //   tmp +
+        //   "<p>Have a nice day!</p>" +
+        //   "<p>Thank you<p>" +
+        //   "<p>Car Guru Team</p>";
+        // Email.send({
+        //   SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
+        //   To: user.email,
+        //   From: "khantminthu199666@gmail.com",
+        //   Subject: "Car Order Notification",
+        //   Body: tmp,
+        // }).then((message) => alert(message + "Please Check Your Email"));
 
-        // let orderData = [];
-        // this.cartList.forEach(x => {
-        //   const orderTmp = {
-        //     carId : x.id,
-        //     userId : user.id,
-        //     total : x.total,
-        //     carQuantity : x.quantity
-        //   }
-        // })
-        // const respCar = await utils.http.post("/car/create", {});
+        let orderData = [];
+        this.cartList.forEach((x) => {
+          const orderTmp = {
+            carId: x.id,
+            userId: user.id,
+            total: x.total,
+            carQuantity: x.quantity,
+          };
+          orderData.push(orderTmp);
+        });
+        const respCar = await utils.http.post("/order/create", { orderData });
 
         // html2pdf(document.getElementById("element-to-convert"), {
         //   margin: 1,
         //   filename: "CustomerOrder.pdf",
         // });
-        this.cartList = [];
-        this.showCart = false;
-        localStorage.removeItem("order");
+        // this.cartList = [];
+        // this.showCart = false;
+        // localStorage.removeItem("order");
       } else {
         this.$router.push({ name: "signin-basic" });
       }
@@ -327,28 +328,6 @@ export default {
             </div>
           </li>
         </ul>
-
-        <!-- testdrive -->
-
-        <!-- <ul @click="discount()" class="navbar-nav navbar-nav-hover ms-auto">
-          <li class="nav-item dropdown dropdown-hover mx-2">
-            <a
-              role="button"
-              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-              :class="getTextColor()"
-              id="dropdownMenuPages"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i
-                class="material-icons opacity-50 me-2 text-md"
-                :class="getTextColor()"
-                >directions_car</i
-              >
-              Test Drive
-            </a>
-          </li>
-        </ul> -->
 
         <ul @click="discount()" class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
@@ -537,8 +516,8 @@ export default {
               >
                         <span>Register</span>
                       </RouterLink>
-                      <!-- User Profile -->
-                      <RouterLink
+                          <!-- User Profile -->
+                          <RouterLink
                         :to="{ name: 'about-user' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -561,7 +540,7 @@ export default {
   </nav>
   <!-- End Navbar -->
 </template>
-<style >
+<style>
 .cartImg {
   width: 45px;
   height: 37px;

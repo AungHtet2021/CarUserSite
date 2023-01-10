@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PresentationView from "../views/Presentation/PresentationView.vue";
 import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
+import TestDrive from "../views/LandingPages/components/TestDrive.vue";
 import AboutUserProfileView from "../views/LandingPages/AboutUs/AboutUserProfileView.vue";
-
 import CarDetails from "../views/LandingPages/components/CarDetails.vue";
 import BrandNewCar from "../views/LandingPages/components/BrandNewCar.vue";
 import UsedCar from "../views/LandingPages/components/UsedCar.vue";
@@ -11,9 +11,6 @@ import ContactView from "../views/LandingPages/ContactUs/ContactView.vue";
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 import SignInBasicView from "../views/LandingPages/SignIn/BasicView.vue";
 import RegisterBasicView from "../views/LandingPages/Register/BasicView.vue";
-
-
-
 import PageHeaders from "../layouts/sections/page-sections/page-headers/HeadersView.vue";
 import PageFeatures from "../layouts/sections/page-sections/features/FeaturesView.vue";
 import NavigationNavbars from "../layouts/sections/navigation/navbars/NavbarsView.vue";
@@ -45,6 +42,11 @@ const router = createRouter({
       path: "/pages/landing-pages/about-us",
       name: "about",
       component: AboutView,
+    },
+    {
+      path: "/pages/landing-pages/test-drive",
+      name: "test-drive",
+      component: TestDrive,
     },
     {
       path: "/pages/landing-pages/about-user",
@@ -91,7 +93,6 @@ const router = createRouter({
       name: "register-basic",
       component: RegisterBasicView,
     },
- 
     {
       path: "/sections/page-sections/page-headers",
       name: "page-headers",
