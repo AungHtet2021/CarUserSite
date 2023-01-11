@@ -328,6 +328,26 @@ export default {
             </div>
           </li>
         </ul>
+<!-- test drvie -->
+        <ul @click="discount()" class="navbar-nav navbar-nav-hover ms-auto">
+          <li class="nav-item dropdown dropdown-hover mx-2">
+            <a
+              role="button"
+              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+              :class="getTextColor()"
+              id="dropdownMenuPages"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >directions_car</i
+              >
+              Test Drive
+            </a>
+          </li>
+        </ul>
 
         <ul @click="discount()" class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">

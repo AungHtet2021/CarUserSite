@@ -12,7 +12,7 @@
       class="page-header min-vh-75"
       :style="{ backgroundImage: `url(${bg0})` }"
     >
-      <span class="mask bg-gradient-dark opacity-6"></span>
+      <span class="mask bg-gradient-dark opacity-1"></span>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
@@ -56,7 +56,7 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
 import Typed from "typed.js";
-import bg0 from "@/assets/img/bg9.jpg";
+import bg0 from "@/assets/img/Landcruiser.jpg";
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 //sections
 const body = document.getElementsByTagName("body")[0];

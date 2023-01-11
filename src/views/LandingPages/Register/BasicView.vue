@@ -143,7 +143,7 @@ export default{
           });
           if(resp.status==200){
             console.log(resp)
-            this.$router.push({ path: "/" });
+            this.$router.push({ name: "signin-basic" });
           }else{
             // this.errorAlert=true;
             alert('Already exist gmail')
