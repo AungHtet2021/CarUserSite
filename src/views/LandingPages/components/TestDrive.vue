@@ -183,7 +183,7 @@ export default {
                 <select v-model="gender" id="gender">
                   <option disabled value="">Please select one</option>
                   <option>Male</option>
-                  <option>Femail</option>
+                  <option>Female</option>
                 </select>
                 <span id="blankGender" style="color: red; visibility: hidden"
                   >Pls Fill the Gender!</span
