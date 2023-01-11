@@ -15,11 +15,12 @@ export default {
       localDomain: utils.constant.localDomain,
       carList: [],
       name: "",
-      email: "",
+      gmail: "",
       requestDate: "",
       country: "",
       gender: "",
       phone: "",
+      carId: "",
       showError: false,
       userData: {},
     };
@@ -30,7 +31,7 @@ export default {
 
   methods: {
     validation() {
-      var email = document.getElementById("email");
+      var gmail = document.getElementById("gmail");
       var name = document.getElementById("name");
       var requestDate = document.getElementById("requestDate");
       var country = document.getElementById("country");
@@ -41,8 +42,8 @@ export default {
         name.style.border = "solid 3px red";
         document.getElementById("blankName").style.visibility = "visible";
         return false;
-      } else if (email.value.trim() == "") {
-        email.style.border = "solid 3px red";
+      } else if (gmail.value.trim() == "") {
+        gmail.style.border = "solid 3px red";
         document.getElementById("blankEmail").style.visibility = "visible";
         return false;
       } else if (requestDate.value.trim() == "") {
@@ -64,27 +65,18 @@ export default {
       }
       return true;
     },
-    async login() {
-      if (this.validation()) {
-        const resp = await utils.http.post("/user/login", {
-          gmail: this.gmail,
-          password: this.password,
-        });
-        if (resp.status == 200) {
-          const data = await resp.json();
-          const userData = {
-            id: data.id,
-            userName: data.name,
-            email: data.gmail,
-          };
-          localStorage.setItem("currentUser", JSON.stringify(userData));
-          // console.log(data.gmail)
-          this.userData = data;
-          // console.log(this.userData.gmail)
-          this.$router.push({ path: "/" });
-        } else {
-          alert("Invalid Gmail Or Password");
-        }
+    async testDriveRequest() {
+      const resp = await utils.http.post("/testDrive/create", {
+        name: this.name,
+        gmail: this.gmail,
+        requestDate: this.requestDate,
+        country: this.country,
+        gender: this.gender,
+        phone: this.phone.toString(),
+        carId: this.carId,
+      });
+      if (resp.status == 200) {
+        alert("Test Drive Request Success");
       }
     },
     async getAllCars() {
@@ -100,6 +92,10 @@ export default {
       } else {
         console.log("something wrong");
       }
+    },
+
+    select(id) {
+      alert(id);
     },
   },
 };
@@ -117,17 +113,21 @@ export default {
     <div class="container">
       <div class="row">
         <div class="col-md-8 text-start mb-5 mt-5">
-          <h3 class="text-white z-index-1 position-relative" style="margin-top: 10%;">
+          <h3
+            class="text-white z-index-1 position-relative"
+            style="margin-top: 10%"
+          >
             Test Drive
           </h3>
           <p class="text-white opacity-8 mb-0">
-            Please leave your contact information, we will get in touch with you.
+            Please leave your contact information, we will get in touch with
+            you.
           </p>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-6" style="margin-top: 1%;">
+        <div class="col-6" style="margin-top: 1%">
           <form @submit.prevent="signUp">
             <div class="row">
               <div class="col-6">
@@ -144,9 +144,9 @@ export default {
               <div class="col-6">
                 <input
                   type="email"
-                  id="email"
+                  id="gmail"
                   placeholder="email"
-                  v-model="email"
+                  v-model="gmail"
                 />
                 <span id="blankEmail" style="color: red; visibility: hidden"
                   >Please Fill the Email!</span
@@ -167,12 +167,11 @@ export default {
                 >
               </div>
               <div class="col-6">
-                <input
-                  type="text"
-                  id="country"
-                  placeholder="Country"
-                  v-model="country"
-                />
+                <select v-model="country" id="country">
+                  <option disabled value="">Please select Country</option>
+                  <option>Myanmar</option>
+                  <option>Japan</option>
+                </select>
                 <span id="blankCountry" style="color: red; visibility: hidden"
                   >Pls Fill the Country!</span
                 >
@@ -181,12 +180,11 @@ export default {
 
             <div class="row mt-3">
               <div class="col-6">
-                <input
-                  type="text"
-                  id="gender"
-                  placeholder="Gender"
-                  v-model="gender"
-                />
+                <select v-model="gender" id="gender">
+                  <option disabled value="">Please select one</option>
+                  <option>Male</option>
+                  <option>Femail</option>
+                </select>
                 <span id="blankGender" style="color: red; visibility: hidden"
                   >Pls Fill the Gender!</span
                 >
@@ -204,23 +202,29 @@ export default {
               </div>
             </div>
             <div v-if="error" class="error">{{ error }}</div>
-            <button @click="login">Test Drive Request</button>
+            <button @click="testDriveRequest">Test Drive Request</button>
           </form>
         </div>
         <div class="col-6">
-            <div class="row">
-          <template v-for="(car, index) in carList" :key="index">
-  
-            <div class="col-4">
+          <div class="row">
+            <template v-for="(car, index) in carList" :key="index">
+              <div class="col-4">
+                <input
+                  style="min-width: 10px; width: 20px; height: 20px"
+                  type="radio"
+                  v-model="carId"
+                  name="carId"
+                  :value="car.id"
+                />
+                <br />
                 <img
-              :src="this.localDomain + '/car' + car.image_path"
-              class="testCarImg"
-              :key="imageIndex"
-            />
-            </div>
-            
+                  :src="this.localDomain + '/car' + car.image_path"
+                  class="testCarImg"
+                  :key="imageIndex"
+                />
+              </div>
             </template>
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -261,7 +265,8 @@ input {
 }
 
 button {
-    margin-left : 2.5%;
+  margin-left: 2%;
+  margin-top: 3%;
   text-decoration: none;
   background: #00a602;
   font-weight: bold;
@@ -271,8 +276,12 @@ button {
 }
 
 .testCarImg {
-width: 150px;
-height: 130px;
-margin-top: 10%;
+  width: 150px;
+  height: 130px;
+  margin-bottom: 10%;
+}
+
+select {
+  min-width: 200px;
 }
 </style>
