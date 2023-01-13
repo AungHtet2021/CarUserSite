@@ -582,7 +582,7 @@ export default {
                       <i
                 class="material-icons opacity-50 me-2 text-md" style="margin-left: 10%;"
                 :class="getTextColor()"
-                ></i
+                >logout</i
               >   <span>Logout</span>
                       </div>
                     </div>
