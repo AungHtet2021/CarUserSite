@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import PresentationView from "../views/Presentation/PresentationView.vue";
 import AboutView from "../views/LandingPages/AboutUs/AboutView.vue";
 import TestDrive from "../views/LandingPages/components/TestDrive.vue";
+import OrderList from "../views/LandingPages/components/OrderList.vue";
 import AboutUserProfileView from "../views/LandingPages/AboutUs/AboutUserProfileView.vue";
 import CarDetails from "../views/LandingPages/components/CarDetails.vue";
 import BrandNewCar from "../views/LandingPages/components/BrandNewCar.vue";
@@ -47,6 +48,11 @@ const router = createRouter({
       path: "/pages/landing-pages/test-drive",
       name: "test-drive",
       component: TestDrive,
+    },
+    {
+      path: "/pages/landing-pages/order",
+      name: "order",
+      component: OrderList,
     },
     {
       path: "/pages/landing-pages/about-user",
