@@ -184,6 +184,9 @@ export default {
       localStorage.setItem("order", JSON.stringify(this.cartList));
       this.getCartList();
     },
+    testdrive() {
+      this.$router.push({ name: "test-drive" });
+    },
 
     discount() {
       this.$router.push({ name: "discount" });
@@ -278,7 +281,7 @@ export default {
               aria-expanded="false"
             >
               <i
-                class="material-icons opacity-6 me-2 text-md"
+                class="material-icons opacity-50 me-2 text-md"
                 :class="getTextColor()"
                 >dashboard</i
               >
@@ -312,6 +315,11 @@ export default {
                         :to="{ name: 'brand' }"
                         class="dropdown-item border-radius-md"
                       >
+                      <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >local_taxi</i
+              >
                         <span>Brand New</span>
                       </RouterLink>
 
@@ -319,6 +327,11 @@ export default {
                         :to="{ name: 'used' }"
                         class="dropdown-item border-radius-md"
                       >
+                      <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >car_crash</i
+              >
                         <span>Used</span>
                       </RouterLink>
                     </div>
@@ -329,7 +342,7 @@ export default {
           </li>
         </ul>
 <!-- test drvie -->
-        <ul @click="discount()" class="navbar-nav navbar-nav-hover ms-auto">
+        <ul @click="testdrive()" class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"
@@ -360,9 +373,9 @@ export default {
               aria-expanded="false"
             >
               <i
-                class="material-icons opacity-6 me-2 text-md"
+                class="material-icons opacity-50 me-2 text-md"
                 :class="getTextColor()"
-                >local_atm</i
+                >monetization_on</i
               >
               Discount
             </a>
@@ -380,7 +393,7 @@ export default {
               aria-expanded="false"
             >
               <i
-                class="material-icons opacity-6 me-2 text-md"
+                class="material-icons opacity-50 me-2 text-md"
                 :class="getTextColor()"
                 >diversity_3</i
               >
@@ -399,7 +412,7 @@ export default {
               aria-expanded="false"
             >
               <i
-                class="material-icons opacity-6 me-2 text-md mt-1"
+                class="material-icons opacity-50 me-2 text-md mt-1"
                 :class="getTextColor()"
                 >shopping_cart</i
               >

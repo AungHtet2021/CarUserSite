@@ -69,7 +69,7 @@ export default {
       label: 'Buy Now',
       color: 'btn-white',
     }"
-    transparent
+    transparent 
   />
   <header class="bg-gradient-dark">
     <div

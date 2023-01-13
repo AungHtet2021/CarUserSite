@@ -46,27 +46,30 @@ export default {
         gmail.style.border = "solid 3px red";
         document.getElementById("blankEmail").style.visibility = "visible";
         return false;
-      } else if (requestDate.value.trim() == "") {
-        requestDate.style.border = "solid 3px red";
+      }
+      else if (date.value.trim() == "") {
+        date.style.border = "solid 3px red";
         document.getElementById("blankDate").style.visibility = "visible";
         return false;
-      } else if (country.value.trim() == "") {
+      }
+      else if (country.value.trim() == "") {
         country.style.border = "solid 3px red";
         document.getElementById("blankCountry").style.visibility = "visible";
         return false;
       } else if (gender.value.trim() == "") {
         gender.style.border = "solid 3px red";
-        document.getElementById("blankCountry").style.visibility = "visible";
+        document.getElementById("blankGender").style.visibility = "visible";
         return false;
       } else if (phone.value.trim() == "") {
         phone.style.border = "solid 3px red";
-        document.getElementById("blankCountry").style.visibility = "visible";
+        document.getElementById("blankPhone").style.visibility = "visible";
         return false;
       }
       return true;
     },
     async testDriveRequest() {
-      const resp = await utils.http.post("/testDrive/create", {
+      if(this.validation()){
+        const resp = await utils.http.post("/testDrive/create", {
         name: this.name,
         gmail: this.gmail,
         requestDate: this.requestDate,
@@ -78,9 +81,10 @@ export default {
       if (resp.status == 200) {
         alert("Test Drive Request Success");
       }
+      }
     },
     async getAllCars() {
-      const resp = await api.get("car/trend");
+      const resp = await api.get("car/testdrive");
       if (resp) {
         this.carList = await resp.json();
         this.carList.forEach((x) => {
@@ -162,6 +166,7 @@ export default {
                   placeholder="Request Date"
                   v-model="requestDate"
                 />
+                <br/>
                 <span id="blankDate" style="color: red; visibility: hidden"
                   >Pls Fill the Request Date!</span
                 >
@@ -172,6 +177,7 @@ export default {
                   <option>Myanmar</option>
                   <option>Japan</option>
                 </select>
+                <br/>
                 <span id="blankCountry" style="color: red; visibility: hidden"
                   >Pls Fill the Country!</span
                 >
@@ -185,6 +191,7 @@ export default {
                   <option>Male</option>
                   <option>Female</option>
                 </select>
+                <br/>
                 <span id="blankGender" style="color: red; visibility: hidden"
                   >Pls Fill the Gender!</span
                 >
@@ -196,6 +203,7 @@ export default {
                   placeholder="Phone"
                   v-model="phone"
                 />
+                <br/>
                 <span id="blankPhone" style="color: red; visibility: hidden"
                   >Pls Fill the Phone!</span
                 >
