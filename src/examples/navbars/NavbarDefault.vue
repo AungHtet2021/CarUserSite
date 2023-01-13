@@ -107,11 +107,17 @@ export default {
       grandTotal: 0,
       cartList: [],
       showCart: false,
+      user : false
     };
   },
 
   async created() {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (user) {
+        this.user = true;
+    }
     this.getCartList();
+
   },
 
   methods: {
@@ -129,7 +135,9 @@ export default {
 
     async order() {
       const user = JSON.parse(localStorage.getItem("currentUser"));
+     
       if (user) {
+        this.user = true;
         // let tmp = "<p>Hey " + user.userName + "</p>";
         // this.cartList.forEach((x) => {
         //   tmp =
@@ -166,7 +174,9 @@ export default {
           orderData.push(orderTmp);
         });
         const respCar = await utils.http.post("/order/create",  orderData );
-
+        if (respCar.status === 200) {
+          alert('save success')
+          } 
         // html2pdf(document.getElementById("element-to-convert"), {
         //   margin: 1,
         //   filename: "CustomerOrder.pdf",
@@ -192,6 +202,12 @@ export default {
     aboutUs() {
       this.$router.push({ name: "about" });
     },
+
+    logout() {
+      localStorage.clear();
+      alert('Logout Successful')
+      this.user = false;
+    }
   },
 };
 </script>
@@ -513,7 +529,7 @@ export default {
                 <div class="col-12 px-4 py-2">
                   <div class="row">
                     <div class="position-relative">
-                      <RouterLink
+                      <RouterLink v-if="!this.user"
                         :to="{ name: 'signin-basic' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -525,7 +541,7 @@ export default {
                         <span>Sign In</span>
                       </RouterLink>
 
-                      <RouterLink
+                      <RouterLink v-if="!this.user"
                         :to="{ name: 'register-basic' }"
                         class="dropdown-item border-radius-md"
                       >
@@ -548,6 +564,14 @@ export default {
               >
                         <span>Profile</span>
                       </RouterLink>
+
+                      <div v-if="this.user" @click="logout()">
+                      <i
+                class="material-icons opacity-50 me-2 text-md" style="margin-left: 10%;"
+                :class="getTextColor()"
+                ></i
+              >   <span>Logout</span>
+                      </div>
                     </div>
                   </div>
                 </div>
