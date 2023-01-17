@@ -191,6 +191,7 @@ export default {
                   <option>Male</option>
                   <option>Female</option>
                 </select>
+                <!-- <div>{{ this.gender }}</div> -->
                 <br/>
                 <span id="blankGender" style="color: red; visibility: hidden"
                   >Pls Fill the Gender!</span

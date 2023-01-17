@@ -175,6 +175,8 @@ export default {
         });
         const respCar = await utils.http.post("/order/create",  orderData );
         if (respCar.status === 200) {
+
+          localStorage.removeItem('order');
           alert('save success')
           } 
         // html2pdf(document.getElementById("element-to-convert"), {
@@ -459,7 +461,8 @@ export default {
                               span
                               style="font-size: smaller; margin-left: 3px"
                               >Quantity: </span
-                            ><span style="font-size: smaller">{{
+                            >
+                            <span style="font-size: smaller">{{
                               cart.quantity
                             }}</span
                             ><br />

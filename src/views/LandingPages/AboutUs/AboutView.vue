@@ -4,7 +4,7 @@ import { onMounted, onUnmounted } from "vue";
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 
 //image
-import bg0 from "@/assets/img/bg9.jpg";
+import bg0 from "@/assets/img/Rollroyce.jpg";
 
 //dep
 import Typed from "typed.js";
@@ -51,12 +51,12 @@ onUnmounted(() => {
       class="page-header min-vh-75"
       :style="{ backgroundImage: `url(${bg0})` }"
     >
-      <span class="mask bg-gradient-dark opacity-6"></span>
+      <span class="mask bg-gradient-dark opacity-2"></span>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
-            <h1 class="text-white">
-              Work with an amazing <span class="text-white" id="typed"></span>
+            <h1 style="color: darkorange">
+              Car GuRu <span class="text-darkorange" id="typed"></span>
             </h1>
             <div id="typed-strings">
               <h1>team</h1>

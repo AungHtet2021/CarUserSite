@@ -80,7 +80,7 @@ export default {
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
-            <h2 class="text-white">NEW CAR</h2>
+            <h2  style="color: red">NEW CAR</h2>
             <h1 style="color: yellow">FOR SALE</h1>
             <p class="lead mb-4 text-white opacity-8">
               FIND THE PERFECT CAR , FOR SALE TODAY!
