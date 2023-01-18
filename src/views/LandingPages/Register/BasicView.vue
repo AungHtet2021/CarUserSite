@@ -178,7 +178,7 @@ export default{
                     <input type="file" id="image" ref="image" accept="image/*" @change="onFilePicked" >
                     <span id="blankImage" style="color:red; visibility: hidden;" >Pls Fill the User Profile!</span>
                     <img class="img" v-if="imageUrl != ''" :src="imageUrl"  contain>           
-                    <input type="text" id="phone" placeholder="Phone Number" v-model="phone">    
+                    <input type="number" id="phone" placeholder="Phone Number" v-model="phone">    
                     <span id="blankPhone" style="color:red; visibility: hidden;" >Pls Fill the PhoneNumber!</span>
                     <button @click="register">Register</button>
                 </v-form>  

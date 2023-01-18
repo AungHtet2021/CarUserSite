@@ -138,30 +138,30 @@ export default {
      
       if (user) {
         this.user = true;
-        // let tmp = "<p>Hey " + user.userName + "</p>";
-        // this.cartList.forEach((x) => {
-        //   tmp =
-        //     tmp +
-        //     "<p>Car Name: " +
-        //     x.name +
-        //     "; Quantity: " +
-        //     x.quantity +
-        //     "; Price: $" +
-        //     x.total +
-        //     "</p>";
-        // });
-        // tmp =
-        //   tmp +
-        //   "<p>Have a nice day!</p>" +
-        //   "<p>Thank you<p>" +
-        //   "<p>Car Guru Team</p>";
-        // Email.send({
-        //   SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
-        //   To: user.email,
-        //   From: "khantminthu199666@gmail.com",
-        //   Subject: "Car Order Notification",
-        //   Body: tmp,
-        // }).then((message) => alert(message + "Please Check Your Email"));
+        let tmp = "<p>Hey " + user.userName + "</p>";
+        this.cartList.forEach((x) => {
+          tmp =
+            tmp +
+            "<p>Car Name: " +
+            x.name +
+            "; Quantity: " +
+            x.quantity +
+            "; Price: $" +
+            x.total +
+            "</p>";
+        });
+        tmp =
+          tmp +
+          "<p>Have a nice day!</p>" +
+          "<p>Thank you<p>" +
+          "<p>Car Guru Team</p>";
+        Email.send({
+          SecureToken: "79888d3d-3cbf-44ca-a4dd-8bb6076f3c01",
+          To: user.email,
+          From: "khantminthu199666@gmail.com",
+          Subject: "Car Order Notification",
+          Body: tmp,
+        }).then((message) => alert("Please Check Your Email"));
 
         let orderData = [];
         this.cartList.forEach((x) => {
@@ -177,15 +177,15 @@ export default {
         if (respCar.status === 200) {
 
           localStorage.removeItem('order');
-          alert('save success')
+          alert('Order Success')
           } 
         // html2pdf(document.getElementById("element-to-convert"), {
         //   margin: 1,
         //   filename: "CustomerOrder.pdf",
         // });
-        // this.cartList = [];
-        // this.showCart = false;
-        // localStorage.removeItem("order");
+        this.cartList = [];
+        this.showCart = false;
+        localStorage.removeItem("order");
       } else {
         this.$router.push({ name: "signin-basic" });
       }
@@ -579,6 +579,18 @@ export default {
                 >account_circle</i
               >
                         <span>Profile</span>
+                      </RouterLink>
+
+                      <RouterLink v-if="this.user"
+                        :to="{ name: 'order' }"
+                        class="dropdown-item border-radius-md"
+                      >
+                      <i
+                class="material-icons opacity-50 me-2 text-md"
+                :class="getTextColor()"
+                >list_alt</i
+              >
+                        <span>Order</span>
                       </RouterLink>
 
                       <div v-if="this.user" @click="logout()">
