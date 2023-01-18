@@ -569,7 +569,7 @@ export default {
                         <span>Register</span>
                       </RouterLink>
                           <!-- User Profile -->
-                          <RouterLink
+                          <RouterLink v-if="this.user"
                         :to="{ name: 'about-user' }"
                         class="dropdown-item border-radius-md"
                       >

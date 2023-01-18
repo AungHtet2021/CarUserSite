@@ -187,7 +187,7 @@ export default {
             <div class="row mt-3">
               <div class="col-6">
                 <select v-model="gender" id="gender">
-                  <option disabled value="">Please select one</option>
+                  <option disabled value="">Gender</option>
                   <option>Male</option>
                   <option>Female</option>
                 </select>

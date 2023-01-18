@@ -2,6 +2,7 @@
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import { onMounted } from "vue";
 import setMaterialInput from "@/assets/js/material-input";
+import * as alertify from "alertifyjs";
 onMounted(() => {
   setMaterialInput();
 });
@@ -23,55 +24,28 @@ export default {
       carId: "",
       showError: false,
       userData: {},
-      list: [
-        {
-          id: 1,
-          name: "KMT1",
-        },
-        {
-          id: 2,
-          name: "KMT2",
-        },
-        {
-          id: 1,
-          name: "KMT3",
-        },
-      ],
+    Lists: [],
     };
   },
 
   async created() {
-    await this.getAllCars();
-    const tmp = this.list.forEach((x) => {
-      id: x.id;
-    });
-
-    const add = {};
-    const genres = {};
-    let arr = [];
-    this.list.forEach((genre, index) => {
-      if (genre.id == genre.id) {
-        arr.push(genre);
-      }
-      genres[genre.id] = arr;
-      this.list.splice(index, 1);
-    });
-    console.log(genres);
+    await this.getAllOrders();
   },
 
   methods: {
-    async getAllCars() {
-      const resp = await api.get("car/trend");
+    async getAllOrders() {
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      const resp = await api.get("order/getOrder/" + user.id);
       if (resp) {
-        this.carList = await resp.json();
-        this.carList.forEach((x) => {
-          x.discountPrice = (x.price - x.price * (x.percentage / 100)).toFixed(
-            2
-          );
-        });
+        this.Lists = await resp.json();
       } else {
         console.log("something wrong");
       }
+    },
+
+    async orderCancel(id) {
+      alertify.success('success');
+      alert(id);
     },
   },
 };
@@ -96,20 +70,27 @@ export default {
             Your Order Lists
           </h3>
 
-          <h5 class="text-white mt-6">BMW3</h5>
-          <span span style="font-size: smaller; margin-left: 3px"
-            >Quantity: </span
-          ><span style="font-size: smaller">2</span><br />
-          <span span style="font-size: smaller; margin-left: 3px">Price: </span
-          ><span style="font-size: smaller"> $12000</span>
-          <hr
-            style="
-              height: 2px;
-              border-width: 0;
-              color: gray;
-              background-color: gray;
-            "
-          />
+          <template v-for="(list, index) in Lists" :key="index">
+            <h5 class="text-white mt-6">{{ list.name }}</h5>
+            <span span style="font-size: smaller; margin-left: 3px"
+              >Quantity: </span
+            ><span style="font-size: smaller">{{ list.car_quantity }}</span
+            ><br />
+            <span span style="font-size: smaller; margin-left: 3px"
+              >Price: </span
+            ><span style="font-size: smaller"> ${{ list.total }}</span>
+            <br />
+
+            <button @click="orderCancel(list.order_id)">Cancel Order</button>
+            <hr
+              style="
+                height: 2px;
+                border-width: 0;
+                color: gray;
+                background-color: gray;
+              "
+            />
+          </template>
         </div>
       </div>
 
@@ -119,6 +100,9 @@ export default {
 </template>
 
 <style scoped>
+
+@import "../../../../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../../../../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
 input {
   min-width: 200px;
 }
@@ -155,7 +139,7 @@ button {
   margin-left: 2%;
   margin-top: 3%;
   text-decoration: none;
-  background: #00a602;
+  background: #e76c14;
   font-weight: bold;
   border: 1px solid #eee;
   border-radius: 20px !important;
