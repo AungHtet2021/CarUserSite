@@ -6,6 +6,7 @@ import ArrDark from "@/assets/img/down-arrow-dark.svg";
 import DownArrWhite from "@/assets/img/down-arrow-white.svg";
 import MaterialButton from "@/components/MaterialButton.vue";
 import html2pdf from "html2pdf.js";
+import * as alertify from "alertifyjs";
 const props = defineProps({
   action: {
     type: Object,
@@ -107,17 +108,16 @@ export default {
       grandTotal: 0,
       cartList: [],
       showCart: false,
-      user : false
+      user: false,
     };
   },
 
   async created() {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     if (user) {
-        this.user = true;
+      this.user = true;
     }
     this.getCartList();
-
   },
 
   methods: {
@@ -135,7 +135,7 @@ export default {
 
     async order() {
       const user = JSON.parse(localStorage.getItem("currentUser"));
-     
+
       if (user) {
         this.user = true;
         let tmp = "<p>Hey " + user.userName + "</p>";
@@ -161,7 +161,7 @@ export default {
           From: "khantminthu199666@gmail.com",
           Subject: "Car Order Notification",
           Body: tmp,
-        }).then((message) => alert("Please Check Your Email"));
+        }).then((message) => alertify.success("Please Check Your Email"));
 
         let orderData = [];
         this.cartList.forEach((x) => {
@@ -173,12 +173,11 @@ export default {
           };
           orderData.push(orderTmp);
         });
-        const respCar = await utils.http.post("/order/create",  orderData );
+        const respCar = await utils.http.post("/order/create", orderData);
         if (respCar.status === 200) {
-
-          localStorage.removeItem('order');
-          alert('Order Success')
-          } 
+          localStorage.removeItem("order");
+          alertify.success("Order Success");
+        }
         // html2pdf(document.getElementById("element-to-convert"), {
         //   margin: 1,
         //   filename: "CustomerOrder.pdf",
@@ -210,9 +209,10 @@ export default {
 
     logout() {
       localStorage.clear();
-      alert('Logout Successful')
+      alertify.success("Logout Successful");
       this.user = false;
-    }
+      this.$router.push({ name: "presentation" });
+    },
   },
 };
 </script>
@@ -333,11 +333,11 @@ export default {
                         :to="{ name: 'brand' }"
                         class="dropdown-item border-radius-md"
                       >
-                      <i
-                class="material-icons opacity-50 me-2 text-md"
-                :class="getTextColor()"
-                >local_taxi</i
-              >
+                        <i
+                          class="material-icons opacity-50 me-2 text-md"
+                          :class="getTextColor()"
+                          >local_taxi</i
+                        >
                         <span>Brand New</span>
                       </RouterLink>
 
@@ -345,11 +345,11 @@ export default {
                         :to="{ name: 'used' }"
                         class="dropdown-item border-radius-md"
                       >
-                      <i
-                class="material-icons opacity-50 me-2 text-md"
-                :class="getTextColor()"
-                >car_crash</i
-              >
+                        <i
+                          class="material-icons opacity-50 me-2 text-md"
+                          :class="getTextColor()"
+                          >car_crash</i
+                        >
                         <span>Used</span>
                       </RouterLink>
                     </div>
@@ -359,7 +359,7 @@ export default {
             </div>
           </li>
         </ul>
-<!-- test drvie -->
+        <!-- test drvie -->
         <ul @click="testdrive()" class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a
@@ -460,8 +460,8 @@ export default {
                             <span
                               span
                               style="font-size: smaller; margin-left: 3px"
-                              >Quantity: </span
-                            >
+                              >Quantity:
+                            </span>
                             <span style="font-size: smaller">{{
                               cart.quantity
                             }}</span
@@ -545,60 +545,66 @@ export default {
                 <div class="col-12 px-4 py-2">
                   <div class="row">
                     <div class="position-relative">
-                      <RouterLink v-if="!this.user"
+                      <RouterLink
+                        v-if="!this.user"
                         :to="{ name: 'signin-basic' }"
                         class="dropdown-item border-radius-md"
                       >
-                      <i
-                class="material-icons opacity-50 me-2 text-md"
-                :class="getTextColor()"
-                >login</i
-              >
+                        <i
+                          class="material-icons opacity-50 me-2 text-md"
+                          :class="getTextColor()"
+                          >login</i
+                        >
                         <span>Sign In</span>
                       </RouterLink>
 
-                      <RouterLink v-if="!this.user"
+                      <RouterLink
+                        v-if="!this.user"
                         :to="{ name: 'register-basic' }"
                         class="dropdown-item border-radius-md"
                       >
-                      <i
-                class="material-icons opacity-50 me-2 text-md"
-                :class="getTextColor()"
-                >app_registration</i
-              >
+                        <i
+                          class="material-icons opacity-50 me-2 text-md"
+                          :class="getTextColor()"
+                          >app_registration</i
+                        >
                         <span>Register</span>
                       </RouterLink>
-                          <!-- User Profile -->
-                          <RouterLink v-if="this.user"
+                      <!-- User Profile -->
+                      <RouterLink
+                        v-if="this.user"
                         :to="{ name: 'about-user' }"
                         class="dropdown-item border-radius-md"
                       >
-                      <i
-                class="material-icons opacity-50 me-2 text-md"
-                :class="getTextColor()"
-                >account_circle</i
-              >
+                        <i
+                          class="material-icons opacity-50 me-2 text-md"
+                          :class="getTextColor()"
+                          >account_circle</i
+                        >
                         <span>Profile</span>
                       </RouterLink>
 
-                      <RouterLink v-if="this.user"
+                      <RouterLink
+                        v-if="this.user"
                         :to="{ name: 'order' }"
                         class="dropdown-item border-radius-md"
                       >
-                      <i
-                class="material-icons opacity-50 me-2 text-md"
-                :class="getTextColor()"
-                >list_alt</i
-              >
+                        <i
+                          class="material-icons opacity-50 me-2 text-md"
+                          :class="getTextColor()"
+                          >list_alt</i
+                        >
                         <span>Order</span>
                       </RouterLink>
 
                       <div v-if="this.user" @click="logout()">
-                      <i
-                class="material-icons opacity-50 me-2 text-md" style="margin-left: 10%;"
-                :class="getTextColor()"
-                >logout</i
-              >   <span>Logout</span>
+                        <i
+                          class="material-icons opacity-50 me-2 text-md"
+                          style="margin-left: 10%"
+                          :class="getTextColor()"
+                          >logout</i
+                        >
+                        <span>Logout</span>
                       </div>
                     </div>
                   </div>

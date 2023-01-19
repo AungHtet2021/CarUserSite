@@ -2,7 +2,6 @@
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import { onMounted } from "vue";
 import setMaterialInput from "@/assets/js/material-input";
-import * as alertify from "alertifyjs";
 onMounted(() => {
   setMaterialInput();
 });
@@ -24,7 +23,7 @@ export default {
       carId: "",
       showError: false,
       userData: {},
-    Lists: [],
+      Lists: [],
     };
   },
 
@@ -44,8 +43,12 @@ export default {
     },
 
     async orderCancel(id) {
-      alertify.success('success');
-      alert(id);
+      const resp = await api.remove("order/delete/" + id);
+      if (resp) {
+        this.getAllOrders();
+      } else {
+        console.log("something wrong");
+      }
     },
   },
 };
@@ -69,19 +72,21 @@ export default {
           >
             Your Order Lists
           </h3>
-
           <template v-for="(list, index) in Lists" :key="index">
-            <h5 class="text-white mt-6">{{ list.name }}</h5>
-            <span span style="font-size: smaller; margin-left: 3px"
-              >Quantity: </span
-            ><span style="font-size: smaller">{{ list.car_quantity }}</span
-            ><br />
-            <span span style="font-size: smaller; margin-left: 3px"
-              >Price: </span
-            ><span style="font-size: smaller"> ${{ list.total }}</span>
-            <br />
-
-            <button @click="orderCancel(list.order_id)">Cancel Order</button>
+            <template v-for="(order, index) in list" :key="index">
+              <h5 class="text-white mt-6">{{ order.name }}</h5>
+              <span span style="font-size: smaller; margin-left: 3px"
+                >Quantity: </span
+              ><span style="font-size: smaller">{{ order.car_quantity }}</span
+              ><br />
+              <span span style="font-size: smaller; margin-left: 3px"
+                >Price: </span
+              ><span style="font-size: smaller"> ${{ order.total }}</span>
+              <br />
+            </template>
+            <button @click="orderCancel(list[index].order_id)">
+              Cancel Order
+            </button>
             <hr
               style="
                 height: 2px;
@@ -100,7 +105,6 @@ export default {
 </template>
 
 <style scoped>
-
 @import "../../../../node_modules/alertifyjs/build/css/alertify.min.css";
 @import "../../../../node_modules/alertifyjs/build/css/themes/bootstrap.min.css";
 input {
