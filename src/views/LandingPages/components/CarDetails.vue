@@ -147,7 +147,7 @@ export default {
             <div class="row">
               <div class="col-4"><h5>Brand</h5></div>
               <div class="col-4">
-                <h5>: BMW</h5>
+                <h5>:  {{ this.carDetails.brand }}</h5>
               </div>
             </div>
 

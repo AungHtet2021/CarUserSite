@@ -166,8 +166,10 @@ export default {
         let orderData = [];
         this.cartList.forEach((x) => {
           const orderTmp = {
-            carId: x.id,
+            id : {
+              carId: x.id,
             userId: user.id,
+            },
             total: x.total,
             carQuantity: x.quantity,
           };

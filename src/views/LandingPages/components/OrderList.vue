@@ -2,6 +2,7 @@
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import { onMounted } from "vue";
 import setMaterialInput from "@/assets/js/material-input";
+import * as alertify from "alertifyjs";
 onMounted(() => {
   setMaterialInput();
 });
@@ -45,9 +46,10 @@ export default {
     async orderCancel(id) {
       const resp = await api.remove("order/delete/" + id);
       if (resp) {
+        alertify.success("Order Cancel Successful")
         this.getAllOrders();
       } else {
-        console.log("something wrong");
+        alertify.success("Order Cancel UnSuccessful")
       }
     },
   },
@@ -84,7 +86,7 @@ export default {
               ><span style="font-size: smaller"> ${{ order.total }}</span>
               <br />
             </template>
-            <button @click="orderCancel(list[index].order_id)">
+            <button @click="orderCancel(list[0].order_id)">
               Cancel Order
             </button>
             <hr
