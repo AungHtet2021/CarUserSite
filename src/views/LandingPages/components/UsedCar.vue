@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
 import Typed from "typed.js";
-import bg0 from "@/assets/img/rollroyce1.jpg";
+import bg0 from "@/assets/img/bmw11.jpg";
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 //sections
 const body = document.getElementsByTagName("body")[0];
