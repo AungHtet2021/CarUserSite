@@ -4,7 +4,7 @@ import Typed from "typed.js";
 import bg0 from "@/assets/img/Rollroyce.jpg";
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
-
+import * as alertify from "alertifyjs";
 //sections
 const body = document.getElementsByTagName("body")[0];
 //hooks
@@ -79,32 +79,35 @@ export default {
     },
 
     addToCart() {
-      var addNew = true;
-      var tempOrder = [];
-      var orderList = JSON.parse(localStorage.getItem("order"));
-      if (orderList !== null) {
-        tempOrder = orderList;
-      }
-
-      tempOrder.forEach((element) => {
-        if (this.id == element.id) {
-          addNew = false;
-          (element.quantity = element.quantity + this.qty),
-            (element.total = element.total + this.total);
+      if (this.qty !== 0) {
+        var addNew = true;
+        var tempOrder = [];
+        var orderList = JSON.parse(localStorage.getItem("order"));
+        if (orderList !== null) {
+          tempOrder = orderList;
         }
-      });
 
-      if (addNew == true) {
-        tempOrder.push({
-          id: this.id,
-          name: this.carDetails.name,
-          quantity: this.qty,
-          total: this.total,
-          image: this.carDetails.image_path,
+        tempOrder.forEach((element) => {
+          if (this.id == element.id) {
+            addNew = false;
+            (element.quantity = element.quantity + this.qty),
+              (element.total = element.total + this.total);
+          }
         });
+
+        if (addNew == true) {
+          tempOrder.push({
+            id: this.id,
+            name: this.carDetails.name,
+            quantity: this.qty,
+            total: this.total,
+            image: this.carDetails.image_path,
+          });
+        }
+        localStorage.setItem("order", JSON.stringify(tempOrder));
+        alertify.success('Add to cart success')
+        this.$router.push({ name: "presentation" });
       }
-      localStorage.setItem("order", JSON.stringify(tempOrder));
-      this.$router.push({ name: "presentation" });
     },
   },
 };
@@ -147,7 +150,7 @@ export default {
             <div class="row">
               <div class="col-4"><h5>Brand</h5></div>
               <div class="col-4">
-                <h5>:  {{ this.carDetails.brand }}</h5>
+                <h5>: {{ this.carDetails.brand_name }}</h5>
               </div>
             </div>
 
