@@ -12,7 +12,9 @@ import api from "../../../utils/api";
 export default {
   data() {
     return {
+      
       localDomain: utils.constant.localDomain,
+      status:"Pending",
       carList: [],
       name: "",
       gmail: "",
@@ -77,6 +79,7 @@ export default {
         gender: this.gender,
         phone: this.phone.toString(),
         carId: this.carId,
+        status:this.status,
       });
       if (resp.status == 200) {
         alert("Test Drive Request Success");
