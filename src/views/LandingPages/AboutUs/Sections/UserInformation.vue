@@ -7,7 +7,7 @@ import CenteredBlogCard from "../../../../examples/cards/blogCards/CenteredBlogC
 <script>
 import utils from "../../../../utils/utils";
 import api from "../../../../utils/api.js";
-
+import * as alertify from "alertifyjs";
 export default {
   props: ["userId"],
   data() {
@@ -60,10 +60,9 @@ export default {
             this.imageFile,
             this.imageFile.type
           );
-          console.log("working");
-          if (respPoster.status === 200) {
+          if (respPoster) {
             respPosterData = await respPoster.text();
-            console.log(respPosterData);
+            alertify.success("Update Success")
           } else {
           }
         } else {
@@ -80,9 +79,10 @@ export default {
               imagePath: respPosterData,
               // video: this.newAdmin.video
             });
-            if (resp.status == 200) {
+            if (resp) {
               console.log(resp);
               this.adminForm = false;
+              alertify.success("Update Success")
               this.$router.push({ path: "/" });
             } else {
               console.log("error");
@@ -188,7 +188,7 @@ export default {
                 v-model="newUser.phone"
               />
             </div>
-            <button @click="update">Update Profile</button>
+            <button style="width: 234px;margin-top: 16px;" @click="update">Update Profile</button>
           </div>
         </div>
         <div class="col-lg-4 ms-auto mt-lg-0 mt-6">
