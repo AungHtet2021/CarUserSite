@@ -2,6 +2,7 @@
 import DefaultNavbar from "../../../examples/navbars/NavbarDefault.vue";
 import { onMounted } from "vue";
 import setMaterialInput from "@/assets/js/material-input";
+import * as alertify from "alertifyjs";
 onMounted(() => {
   setMaterialInput();
 });
@@ -12,9 +13,8 @@ import api from "../../../utils/api";
 export default {
   data() {
     return {
-      
       localDomain: utils.constant.localDomain,
-      status:"Pending",
+      status: "Pending",
       carList: [],
       name: "",
       gmail: "",
@@ -48,13 +48,11 @@ export default {
         gmail.style.border = "solid 3px red";
         document.getElementById("blankEmail").style.visibility = "visible";
         return false;
-      }
-      else if (date.value.trim() == "") {
-        date.style.border = "solid 3px red";
+      } else if (requestDate.value.trim() == "") {
+        requestDate.style.border = "solid 3px red";
         document.getElementById("blankDate").style.visibility = "visible";
         return false;
-      }
-      else if (country.value.trim() == "") {
+      } else if (country.value.trim() == "") {
         country.style.border = "solid 3px red";
         document.getElementById("blankCountry").style.visibility = "visible";
         return false;
@@ -70,20 +68,22 @@ export default {
       return true;
     },
     async testDriveRequest() {
-      if(this.validation()){
+      if (this.validation()) {
         const resp = await utils.http.post("/testDrive/create", {
-        name: this.name,
-        gmail: this.gmail,
-        requestDate: this.requestDate,
-        country: this.country,
-        gender: this.gender,
-        phone: this.phone.toString(),
-        carId: this.carId,
-        status:this.status,
-      });
-      if (resp.status == 200) {
-        alert("Test Drive Request Success");
-      }
+          name: this.name,
+          gmail: this.gmail,
+          requestDate: this.requestDate,
+          country: this.country,
+          gender: this.gender,
+          phone: this.phone.toString(),
+          carId: this.carId,
+          status: this.status,
+        });
+        if (resp.status == 200) {
+          alertify.success("Test Drive Request Success");
+        } else {
+          alertify.error("Test Drive Request UnSuccess");
+        }
       }
     },
     async getAllCars() {
@@ -95,15 +95,9 @@ export default {
             2
           );
         });
-        console.log(this.carList);
-      } else {
-        console.log("something wrong");
-      }
+      } 
     },
 
-    select(id) {
-      alert(id);
-    },
   },
 };
 </script>
@@ -165,11 +159,11 @@ export default {
               <div class="col-6">
                 <input
                   type="date"
-                  id="date"
+                  id="requestDate"
                   placeholder="Request Date"
                   v-model="requestDate"
                 />
-                <br/>
+                <br />
                 <span id="blankDate" style="color: red; visibility: hidden"
                   >Pls Fill the Request Date!</span
                 >
@@ -180,7 +174,7 @@ export default {
                   <option>Myanmar</option>
                   <option>Japan</option>
                 </select>
-                <br/>
+                <br />
                 <span id="blankCountry" style="color: red; visibility: hidden"
                   >Pls Fill the Country!</span
                 >
@@ -195,7 +189,7 @@ export default {
                   <option>Female</option>
                 </select>
                 <!-- <div>{{ this.gender }}</div> -->
-                <br/>
+                <br />
                 <span id="blankGender" style="color: red; visibility: hidden"
                   >Pls Fill the Gender!</span
                 >
@@ -207,7 +201,7 @@ export default {
                   placeholder="Phone"
                   v-model="phone"
                 />
-                <br/>
+                <br />
                 <span id="blankPhone" style="color: red; visibility: hidden"
                   >Pls Fill the Phone!</span
                 >
